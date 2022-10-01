@@ -6,9 +6,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.0",
+    "@heroicons/react": "^2.0.11",
+    "flowbite": "^1.5.3",
+    "flowbite-react": "^0.1.11",
+    "graphql": "^16.6.0",
     "next": "latest",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@types/node": "17.0.35",
