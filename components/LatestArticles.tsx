@@ -1,9 +1,64 @@
-import { CalendarDaysIcon, ClockIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
+import { CalendarDaysIcon, ClockIcon, ChevronRightIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { Allposts, Post } from "../custom_interface"
 import { usePosts} from "../lib/hooks"
-import OptimizedImage from "./OptimizedImage"
+import OptimizedImage, {ContainImage} from "./OptimizedImage"
+import { titleCase } from "./TopMain"
 
-export const Article = ({title, uri, featuredImage, categories}:Post) => <div className="rounded-2xl bg-white shadow-lg hover:shadow-2xl overflow-hidden">
+
+export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
+  let src:string, bg:string;
+  
+  switch (difficulty) {
+    case 'beginner':
+        src = '/img/greendot.svg'
+        bg = 'bg-green-200'
+        break;
+    case 'intermediate':
+        src = '/img/yellowdot.svg'
+        bg = 'bg-orange-200'
+        break;
+    case 'advanced':
+        src = '/img/reddot.svg'
+        bg = 'bg-red-200'
+        break;
+    default:
+        src = '/img/greendot.svg'
+        bg = 'bg-green-200'  
+  }
+
+  const className:string = `flex text-gray-700 ${bg} rounded-md  p-1 px-3 items-center space-x-2 text-sm`
+  
+  
+
+  return (
+    <span className={className}>
+      <OptimizedImage src={src} alt="difficulty dot" className="w-[0.35rem] h-[0.35rem]" />
+      <span>{titleCase(difficulty ? difficulty : 'Beginner' )}</span>
+    </span>
+  )
+}
+
+
+
+export const formatDate = (date?: string) => {
+  if (!date) return ''
+  const options:Intl.DateTimeFormatOptions = {day: 'numeric', month: 'short',  year: 'numeric' };
+  const d = new Date(date);
+  return d.toLocaleDateString('en-US', options);
+
+}
+
+export const formatReadingTime = (minutes?: string) => {
+    if (!minutes) return '1min'  
+    
+    // remove all non-digits
+    const num = parseInt(minutes.replace(/\D/g, ''));
+    if (num < 1) return '1m';
+    return `${num.toString()}m`;
+}
+
+
+export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) => <div className="rounded-2xl bg-white shadow-lg hover:shadow-2xl overflow-hidden">
 <div className="relative">
   <OptimizedImage src={featuredImage?.node?.sourceUrl} alt="featured image" className="h-40 w-full"/>
   <span className="px-2 p-1 bg-black rounded-md absolute right-2 text-white text-sm top-3">
@@ -13,20 +68,17 @@ export const Article = ({title, uri, featuredImage, categories}:Post) => <div cl
 
 <div className="p-4">
     <p className="text-lg font-bold">{title}</p>
-    <div className="flex items-center justify-between mt-8">
-        <span className="flex text-gray-700 bg-orange-200 rounded-md  p-1 px-3 items-center space-x-2 text-sm">
-            <img src="img/yellowdot.svg" alt="yellow dot" />
-            <span>Intermediate</span>
-        </span>
+    <div className="flex text-xs ssm:flex-col ms:flex-row items-center ssm:items-start ms:items-center justify-between ssm:space-y-3 ms:space-y-0 mt-8">
+        <Difficulty difficulty={difficulties?.edges[0].node.name} />
         <span className="flex text-sm items-center space-x-3 opacity-75 text-gray-600">
             <span className="flex space-x-1 items-center" >
                 <CalendarDaysIcon className="h-3 w-3" />
-                <span>23 JUN 2023</span>
+                <span>{formatDate(date).toLocaleUpperCase()}</span>
             </span>
 
             <span className="flex space-x-1 items-center">
                 <ClockIcon className="h-3 w-3" />
-                <span>5m</span>
+                <span>{formatReadingTime(readingTime)}</span>
             </span>
         </span>
     </div>
@@ -52,13 +104,16 @@ const LatestArticles = () => {
         </div>
 
         <div className="grid grid-cols-1 my-6 md:grid-cols-3 space-y-6 md:space-y-0 md:gap-8 ">
-        {first_six_posts?.length > 0 && first_six_posts.map((post, index) => 
+        {first_six_posts?.length > 0 && first_six_posts.map((post) => 
             <Article 
-                key={index}
+                key={post.node.id}
                 title={post.node.title}
                 uri={post.node.uri}
                 featuredImage={post.node.featuredImage}
                 categories={post.node.categories}
+                date={post.node.date}
+                readingTime = {post.node.readingTime}
+                difficulties = {post.node.difficulties}
              />
             )
           }

@@ -1,9 +1,33 @@
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/solid"
 import { useFeaturedPost } from "../lib/hooks"
+import { Difficulty, formatDate, formatReadingTime } from "./LatestArticles"
 import OptimizedImage from "./OptimizedImage"
+
+
+const getReadingTime = (htmlstring?:string) => {
+    if (!htmlstring) return '1m'
+    const wordsPerMinute = 225;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(
+        `
+        <div id="content">
+            ${htmlstring}
+        </div>
+        `
+        , 'text/html');
+
+    const text = doc.body.textContent || '';
+
+    const numberOfWords = text.split(/\s/g).length;
+    const minutes = Math.ceil(numberOfWords / wordsPerMinute);
+    return `${minutes}m`;
+}
+
+
 
 const Top = () => {
     const featuredPost = useFeaturedPost(state => state.post)
+    
 
     return (
     <div className="grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 md:gap-14 my-6">
@@ -26,19 +50,17 @@ const Top = () => {
                 <div className="p-6 px-6">
                     <p className="text-xl font-bold">{featuredPost.title}</p>
                     <div className="flex items-center justify-between mt-8">
-                        <span className="flex text-gray-700 bg-orange-200 rounded-md  p-1 px-3 items-center space-x-2 text-sm">
-                            <img src="img/yellowdot.svg" alt="yellow dot" />
-                            <span>Intermediate</span>
-                        </span>
+                        <Difficulty difficulty={featuredPost?.difficulties?.edges[0].node.name} />
+                        
                         <span className="flex items-center space-x-3 opacity-75 text-gray-600">
                             <span className="flex space-x-2 items-center" >
                                 <CalendarDaysIcon className="h-5 w-5 text-gray-600" />
-                                <span>23 JUN 2023</span>
+                                <span>{formatDate(featuredPost.date)}</span>
                             </span>
 
                             <span className="flex space-x-2 items-center">
                                 <ClockIcon className="h-5 w-5 text-gray-600" />
-                                <span>5m</span>
+                                <span>{getReadingTime(featuredPost.content)}</span>
                             </span>
                         </span>
                     </div>

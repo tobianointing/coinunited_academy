@@ -6,6 +6,23 @@ type featuredImage = {
     }
 }
 
+type Tag = {
+  id: string
+  name: string
+  
+}
+
+
+type Difficulty = {
+    edges : [
+      {
+        node:{
+          name: string
+        }
+      }
+    ]
+}
+
 
 export type Post = {
     __typename?: string,
@@ -14,7 +31,10 @@ export type Post = {
     uri : string,
     featuredImage?: Object<featuredImage>,
     categories?: Object<postCategory>
-  
+    date?: string,
+    readingTime?: string,
+    difficulties?: Difficulty,
+    content?: string,
   }
 
 
@@ -42,12 +62,19 @@ export interface Allposts {
     __typename: string;
     node: Post;
   }
-  
+
+interface IDifficulty {
+    id: string;
+    name: string;
+}
+
   
 export interface IData {
-    categories: category[]
+    categories: category[];
     posts: Allposts[];
     featuredPost: Post;
+    difficulties: IDifficulty[];
+    tags: Tag[];
   }
   
 
@@ -59,4 +86,15 @@ export interface ICatStore {
 export interface IPostStore{
   posts: Array<Allposts>
   setPosts: (state:Allposts[]) => void
+}
+
+
+export interface IDifficultyStore{
+  difficulties: IDifficulty[]
+  setDifficulties: (state:IDifficulty[]) => void
+}
+
+export interface ITagStore{
+  tags: Tag[]
+  setTags: (state:Tag[]) => void
 }

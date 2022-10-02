@@ -13,8 +13,9 @@ const defaultOptions: DefaultOptions = {
   
 export const client = new ApolloClient({
     uri: 'https://darp.coinunited.io/index.php?graphql',
-    cache: new InMemoryCache()
-    // defaultOptions: defaultOptions
+    cache: new InMemoryCache(),
+    ssrMode: true,
+    defaultOptions: defaultOptions
 })
 
 

@@ -7,17 +7,17 @@ const Header = () => {
     <div className='sticky z-10 top-0'>
     <div className='flex items-center justify-between px-4 p-3'>
         <div className='flex items-center'>
-            <ContainImage src="/img/cu_logo.png" alt="coinunited logo" className="w-48 h-10 hidden md:block" />            
-            <ContainImage src="/img/cu_academy_logo.png" alt="coinunited logo" className="w-48 h-12 md:hidden" />
+            <ContainImage src="/img/cu_logo.png" alt="coinunited logo" className="ms:w-48 w-40 h-10 hidden md:block" />            
+            <ContainImage src="/img/cu_academy_logo.png" alt="coinunited logo" className="ms:w-48 w-40 h-12 md:hidden" />
             
-            <div className='flex mx-4 text-sm pt-1 opacity-90 items-center space-x-3'>
+            <div className='flex mx-4 text-xs ms:text-sm pt-1 opacity-90 items-center space-x-3'>
 
 
-            <div className='hidden md:flex space-x-6 font-semibold items-center'>
+            <div className='hidden md:flex ms:space-x-6 space-x-3 font-semibold items-center'>
 
                 <img src="img/menu.png" alt="menu icon" className='w-4 h-4'/>
 
-                <button className='rounded-md bg-gradient-to-r from-sky-600 via-sky-500 to-sky-300 px-3 p-1 text-white'>Get 120 USD</button>
+                <button className='rounded-md hidden ms:inline-block bg-gradient-to-r from-sky-600 via-sky-500 to-sky-300 px-3 p-1 text-white'>Get 120 USD</button>
                 
                 <Dropdown label="Buy crypto" inline={true}>
                   <Dropdown.Item>
@@ -55,7 +55,7 @@ const Header = () => {
         <Bars3Icon className="h-9 w-9 md:hidden" />
 
 
-        <div className='md:flex hidden text-sm space-x-4 opacity-90 font-semibold items-center'>
+        <div className='md:flex hidden text-sm ms:space-x-4 space-x-3 opacity-90 font-semibold items-center'>
               <a href="#">Login</a>
               <button className='bg-amber-600 p-1 px-4 rounded-md text-white'>Register</button>
 
@@ -72,10 +72,10 @@ const Header = () => {
     </div>
    
    <div className='bg-orange-100  flex justify-center font-semibold items-center p-3'>
-        <div className='flex items-center text-sm space-x-3'>
+        <div className='flex items-center text-sm ms:space-x-3 space-x-2'>
             <span>Sign up for $120 Bonus</span>
             <ArrowLongRightIcon  className='w-4 h-4'/>
-            <button className='bg-amber-600 p-1 px-4 rounded-md text-white'>Register now</button>
+            <button className='bg-amber-600 p-1 ms:px-4 px-2 rounded-md text-white'>Register now</button>
         </div>
    </div>
   </div>

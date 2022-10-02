@@ -12,21 +12,24 @@ import Footer from '../components/Footer'
 import {client} from '../lib/apollo'
 import { DocumentNode, gql } from '@apollo/client'
 import { IData } from '../custom_interface'
-import {usePosts, useCategories, useFeaturedPost} from '../lib/hooks'
+import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags} from '../lib/hooks'
 import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
 
 const Home = (props:IData) => {
-  const {categories, posts, featuredPost} = props
+  const {categories, posts, featuredPost, difficulties, tags} = props
   const setPosts = usePosts(state => state.setPosts)
   const setCategories = useCategories(state => state.setCategories)  
   const setFeaturedPost = useFeaturedPost(state => state.setFeaturedPost)
-
-
+  const setDifficulties = useDifficuties(state => state.setDifficulties)  
+  const setTags = useTags(state => state.setTags)
+  
   useEffect(() => {
     setPosts(posts);
     setCategories(categories);
     setFeaturedPost(featuredPost);
+    setDifficulties(difficulties);
+    setTags(tags);
   }, [])
 
 
@@ -123,7 +126,7 @@ const Home = (props:IData) => {
 export default Home
 
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const GET_ALL_POSTS:DocumentNode = gql`
   query GetPostsByCategory {
     categories(where: {orderby: COUNT, order: DESC}, first: 5) {
@@ -135,6 +138,15 @@ export const getServerSideProps = async () => {
             featuredImage {
               node {
                 sourceUrl(size: POST_THUMBNAIL)
+              }
+            }
+            readingTime
+            date
+            difficulties(first: 1) {
+              edges {
+                node {
+                  name
+                }
               }
             }
           }
@@ -158,6 +170,15 @@ export const getServerSideProps = async () => {
               name
             }
           }
+          date
+          readingTime
+          difficulties(first: 1) {
+            edges {
+              node {
+                name
+              }
+            }
+          }
         }
       }
     }
@@ -171,24 +192,55 @@ export const getServerSideProps = async () => {
         }
         uri
         id
+        difficulties(first: 1) {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+        date
+        content
       }
     }
-  }     
+    difficulties {
+      nodes {
+        id
+        name
+      }
+    }
+    tags(first: 12, where: {orderby: COUNT, order: DESC}) {
+      nodes {
+        id
+        name
+      }
+    }
+  }
   `
   const {data} = await client.query({
     query: GET_ALL_POSTS
   });
 
+  
+
   const categories = await data.categories.nodes;
   const posts = await data.posts.edges;
   const featuredPost = await data?.featuredPosts?.nodes[0];
+  const difficulties = await data.difficulties.nodes; 
+  const tags = await data.tags.nodes;
 
   return  {
     props: {
       categories,
       posts,
-      featuredPost
+      featuredPost,
+      difficulties,
+      tags
     }
   }
+
+
+
+
 }
 

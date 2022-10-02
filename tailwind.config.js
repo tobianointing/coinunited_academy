@@ -13,6 +13,10 @@ module.exports = {
       fontFamily:{
         Dm: ['DM Serif Display', 'serif'],
         DmSans: ['DM Sans', 'sans-serif']
+      },
+      screens: {
+        ssm:"778px",
+        ms: '860px',
       }
     },
   },
