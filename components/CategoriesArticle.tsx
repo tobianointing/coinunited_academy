@@ -8,8 +8,8 @@ import OptimizedImage from "./OptimizedImage"
 const CatArticle = ({title, image }:{title:string, image:string}) => {
 
     return (
-        <div className="flex items-stretch flex-col md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl border border-gray-100">
-            <div className="w-full md:w-2/5 h-full">
+        <div className="flex md:items-stretch flex-col  md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl border border-gray-100">
+            <div className="w-full md:w-2/5 h-64 md:h-full">
                 <OptimizedImage src={image} className="w-full h-full" alt={title}  />
             </div>
             <div className="w-full md:w-3/5 p-3">

@@ -1,3 +1,4 @@
+import { ContainImage } from "./OptimizedImage";
 
 const Footer = () => {
   return (
@@ -5,7 +6,7 @@ const Footer = () => {
         
         <div className="flex items-center font-bold border-b border-gray-500 py-7 justify-between">
             <h3 className="text-2xl md:text-4xl">Start Trading Now</h3>
-            <button className="bg-amber-600 px-5 p-1 rounded-md">Get Started</button>
+            <button className="bg-amber-600 px-2 md:px-5 p-1 rounded-md">Get Started</button>
         </div>
         
         <div className="my-8 mb-24 grid grid-cols-1 space-y-10 md:space-y-0 md:grid-cols-6 md:gap-[7rem]">

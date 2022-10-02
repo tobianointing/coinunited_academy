@@ -14,6 +14,7 @@ import { DocumentNode, gql } from '@apollo/client'
 import { IData } from '../custom_interface'
 import {usePosts, useCategories, useFeaturedPost} from '../lib/hooks'
 import { useEffect } from 'react'
+import {ContainImage} from '../components/OptimizedImage'
 
 const Home = (props:IData) => {
   const {categories, posts, featuredPost} = props
@@ -82,7 +83,7 @@ const Home = (props:IData) => {
                 <div className="flex flex-col md:flex-row my-8 items-center md:space-x-20 md:justify-between">
 
                     <div className='md:w-1/4 p-8 md:p-1 w-full'>
-                        <img src="img/announcement.svg" className='w-3/5 mx-auto md:w-full object-cover' alt="announcement" />
+                        <ContainImage src="/img/announcement.svg" className='w-3/5 mx-auto md:w-full h-64' alt="announcement" />
                     </div>
 
                     <div className='md:w-3/4 w-full'>
@@ -91,16 +92,16 @@ const Home = (props:IData) => {
                         
                         <p className='my-4 mt-6 font-bold text-lg'>Summer Limited Offer! <br /> FREE subscription to first-hand exclusive crypto news.</p>
                         
-                        <div className='flex items-center space-x-5 my-9'>
+                        <div className='flex items-center space-x-5 justify-center md:justify-start my-9'>
                             <input type="text" placeholder='Enter your email address' className='border placeholder:font-semibold border-gray-300 rounded-sm p-1 bg-gray-100 px-2 w-80' />
                             <button className='bg-gray-100 px-4 p-1 border border-gray-300 font-semibold rounded-sm'>Subscribe</button>
                         </div>                      
 
 
                         </div>
-                        <div className="flex font-bold items-center space-x-3">
-                            <input type="checkbox" name="subscribe" />
-                            <p>I have read and agree to CoinUnited.io's <span className='text-amber-600'>Terms of Service</span></p>
+                        <div className="flex font-bold items-center justify-center md:justify-start space-x-3">
+                            <input type="checkbox" name="subscribe" /> <br />
+                            <span>I have read and agree to CoinUnited.io's <span className='text-amber-600'>Terms of Service</span></span>
                         </div>
 
                     </div>

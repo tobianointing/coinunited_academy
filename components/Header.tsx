@@ -1,14 +1,14 @@
 import {Bars3Icon ,ArrowLongRightIcon} from '@heroicons/react/24/solid'
 import { Dropdown } from "flowbite-react";
-
+import { ContainImage } from './OptimizedImage';
 
 const Header = () => {
   return (
     <div className='sticky z-10 top-0'>
     <div className='flex items-center justify-between px-4 p-3'>
         <div className='flex items-center'>
-            <img src="/img/cu_logo.png" alt="coinunited logo" className="w-48 hidden md:block" />            
-            <img src="/img/cu_academy_logo.png" alt="coinunited logo" className="w-48 md:hidden" />
+            <ContainImage src="/img/cu_logo.png" alt="coinunited logo" className="w-48 h-10 hidden md:block" />            
+            <ContainImage src="/img/cu_academy_logo.png" alt="coinunited logo" className="w-48 h-12 md:hidden" />
             
             <div className='flex mx-4 text-sm pt-1 opacity-90 items-center space-x-3'>
 
