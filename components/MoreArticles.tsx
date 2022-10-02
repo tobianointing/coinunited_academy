@@ -1,7 +1,7 @@
 import { PlusIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { Article } from "./LatestArticles"
 import { usePosts } from "../lib/hooks"
-import OptimizedImage from "./OptimizedImage"
+import OptimizedImage, {ContainImage} from "./OptimizedImage"
 import { titleCase } from "./TopMain"
 import { useDifficuties, useTags } from "../lib/hooks"
 
@@ -33,7 +33,7 @@ const Difficulty =( {difficulty}:{difficulty:string}) =>{
         }
     return (
         <button className="border flex space-x-3 rounded-md text-sm text-gray-600 border-gray-300 p-1 px-2 justify-center items-center">
-            <OptimizedImage src={src} alt="difficulty dot" className="h-[0.35rem] w-[0.35rem]" />
+            <ContainImage src={src} alt="difficulty dot" className="h-[0.35rem] w-[0.35rem]" />
             <span>{titleCase(difficulty)}</span>
             <PlusIcon className="h-4 w-4 text-gray-700 font-bold"/>
         </button>
