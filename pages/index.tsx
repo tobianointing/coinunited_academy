@@ -236,7 +236,8 @@ export const getStaticProps = async () => {
       featuredPost,
       difficulties,
       tags
-    }
+    },
+    revalidate: 60
   }
 
 
