@@ -1,7 +1,7 @@
 import { PlusIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { Article } from "./LatestArticles"
 import { usePosts } from "../lib/hooks"
-import OptimizedImage, {ContainImage} from "./OptimizedImage"
+import  {ContainImage} from "./OptimizedImage"
 import { titleCase } from "./TopMain"
 import { useDifficuties, useTags } from "../lib/hooks"
 
@@ -76,14 +76,14 @@ const MoreArticles = () => {
         <div className="grid grid-cols-1 my-6 md:grid-cols-3 space-y-6 md:space-y-0 md:gap-8">
             {rest_after_six?.length > 0 && rest_after_six.map((post) => 
                 <Article 
-                    key={post.node.id}
-                    title={post.node.title}
-                    uri={post.node.uri}
-                    featuredImage={post.node.featuredImage}
-                    categories={post.node.categories}
-                    date={post.node.date}
-                    readingTime = {post.node.readingTime}
-                    difficulties = {post.node.difficulties}
+                    key={post?.node?.id}
+                    title={post?.node?.title}
+                    uri={post?.node?.uri}
+                    featuredImage={post?.node?.featuredImage}
+                    categories={post?.node?.categories}
+                    date={post?.node?.date}
+                    readingTime = {post?.node?.readingTime}
+                    difficulties = {post?.node?.difficulties}
                 />
                 )
             }

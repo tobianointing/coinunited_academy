@@ -16,7 +16,7 @@ type Tag = {
 type Difficulty = {
     edges : [
       {
-        node:{
+        node?:{
           name: string
         }
       }

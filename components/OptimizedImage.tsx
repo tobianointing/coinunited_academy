@@ -8,9 +8,10 @@ interface OptimizedImageProps {
 
 
 const OptimizedImage = ({src, alt, className}:OptimizedImageProps) => {
+
   return (
       <div className={`relative ${className}`}>
-          <Image src={src} alt={alt} layout="fill" objectFit="cover" loading="lazy"/>
+          <Image src={src ? src : '/img/default.jpg'} alt={alt} layout="fill" objectFit="cover" loading="lazy"/>
       </div>
   )
 }

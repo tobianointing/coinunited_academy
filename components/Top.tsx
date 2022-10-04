@@ -50,7 +50,7 @@ const Top = () => {
                 <div className="p-6 px-6">
                     <p className="text-xl font-bold">{featuredPost.title}</p>
                     <div className="flex items-center justify-between mt-8">
-                        <Difficulty difficulty={featuredPost?.difficulties?.edges[0].node.name} />
+                        <Difficulty difficulty={featuredPost?.difficulties?.edges[0]?.node?.name} />
                         
                         <span className="flex items-center space-x-3 opacity-75 text-gray-600">
                             <span className="flex space-x-2 items-center" >

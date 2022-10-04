@@ -58,31 +58,34 @@ export const formatReadingTime = (minutes?: string) => {
 }
 
 
-export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) => <div className="rounded-2xl bg-white shadow-lg hover:shadow-2xl overflow-hidden">
-<div className="relative">
-  <OptimizedImage src={featuredImage?.node?.sourceUrl} alt="featured image" className="h-40 w-full"/>
-  <span className="px-2 p-1 bg-black rounded-md absolute right-2 text-white text-sm top-3">
-    {categories?.nodes[0]?.name}
-  </span>
-</div>
-
-<div className="p-4">
-    <p className="text-lg font-bold">{title}</p>
-    <div className="flex text-xs ssm:flex-col ms:flex-row items-center ssm:items-start ms:items-center justify-between ssm:space-y-3 ms:space-y-0 mt-8">
-        <Difficulty difficulty={difficulties?.edges[0].node.name} />
-        <span className="flex text-sm items-center space-x-3 opacity-75 text-gray-600">
-            <span className="flex space-x-1 items-center" >
-                <CalendarDaysIcon className="h-3 w-3" />
-                <span>{formatDate(date).toLocaleUpperCase()}</span>
-            </span>
-
-            <span className="flex space-x-1 items-center">
-                <ClockIcon className="h-3 w-3" />
-                <span>{formatReadingTime(readingTime)}</span>
-            </span>
-        </span>
+export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) => 
+  <div className="rounded-2xl relative  bg-white flex flex-col shadow-lg hover:shadow-2xl overflow-hidden">
+    <div className="relative">
+      <OptimizedImage src={featuredImage?.node?.sourceUrl} alt="featured image" className="h-56 w-full"/>
+      <span className="px-2 p-1 bg-black rounded-md absolute right-2 text-white text-sm top-3">
+        {categories?.nodes[0]?.name}
+      </span>
     </div>
-</div>
+
+    <div className="p-4 flex-grow">
+        <p className="text-lg font-bold mb-7 ssm:mb-14 ms:mb-8">{title}</p>
+        <div className="bottom-3 w-full left-0 px-4 absolute">
+          <div className="flex text-xs ssm:flex-col ms:flex-row items-center ssm:items-start ms:items-center justify-between ssm:space-y-3 ms:space-y-0 mt-8">
+              <Difficulty difficulty={difficulties?.edges[0]?.node?.name} />
+              <span className="flex text-sm items-center space-x-3 opacity-75 text-gray-600">
+                  <span className="flex space-x-1 items-center" >
+                      <CalendarDaysIcon className="h-3 w-3" />
+                      <span>{formatDate(date).toLocaleUpperCase()}</span>
+                  </span>
+
+                  <span className="flex space-x-1 items-center">
+                      <ClockIcon className="h-3 w-3" />
+                      <span>{formatReadingTime(readingTime)}</span>
+                  </span>
+              </span>
+          </div>
+        </div>
+    </div>
 </div> 
 
 

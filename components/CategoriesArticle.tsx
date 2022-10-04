@@ -17,12 +17,13 @@ const CatArticle = ({title, image, difficulties, date, readingTime }:CatPost) =>
             <div className="w-full md:w-2/5 h-64 md:h-full">
                 <OptimizedImage src={image} className="w-full h-full" alt={title}  />
             </div>
-            <div className="w-full md:w-3/5 p-3">
-                <h1 className="font-bold">{title}</h1>
+            
+            <div className="w-full md:w-3/5 relative flex-grow p-3">
+                <h1 className="font-bold mb-8">{title}</h1>
 
-                <div className="flex text-xs ssm:flex-col ms:flex-row items-center ssm:items-start ms:items-center justify-between ssm:space-y-3 ms:space-y-0 mt-8">
+                <div className="flex absolute bottom-2 left-0 w-full px-3 text-xs ssm:flex-col ms:flex-row items-center ssm:items-start ms:items-center justify-between ssm:space-y-3 ms:space-y-0 mt-8">
                     
-                    <Difficulty difficulty={difficulties?.edges[0].node.name} />
+                    <Difficulty difficulty={difficulties?.edges[0]?.node?.name} />
 
                     <span className="flex items-center space-x-3 opacity-75 text-gray-600">
                         <span className="flex space-x-1 items-center" >
@@ -36,6 +37,8 @@ const CatArticle = ({title, image, difficulties, date, readingTime }:CatPost) =>
                     </span>
                 </div>
             </div>
+
+
         </div>
     )
 }
@@ -85,7 +88,7 @@ const CategoriesArticle = () => {
     <div  className="my-5">
         
         {categories?.map((category, index) => (
-            category.posts.nodes.length > 0 &&
+            category.posts.nodes.length > 0 && category.name.toLowerCase() !== "uncategorized" &&
                 <CategoryBlock key={index} name={titleCase(category.name)} posts={category?.posts?.nodes}/>
          ))
         }
