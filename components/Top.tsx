@@ -2,7 +2,7 @@ import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/solid"
 import { useFeaturedPost } from "../lib/hooks"
 import { Difficulty, formatDate, formatReadingTime } from "./LatestArticles"
 import OptimizedImage from "./OptimizedImage"
-
+import Link from "next/link";
 
 const getReadingTime = (htmlstring?:string) => {
     if (!htmlstring) return '1m'
@@ -43,31 +43,32 @@ const Top = () => {
             </p>
         </div>
 
-        {featuredPost && <div>
+        {featuredPost && <Link href={featuredPost?.uri}><a>
             <p className="text-2xl mb-4 font-bold">FEATURED</p>
             <div className="rounded-xl shadow-xl overflow-hidden">
                 <OptimizedImage src={featuredPost?.featuredImage?.node?.sourceUrl} alt="featured image" className="h-60 w-full"/>
                 <div className="p-6 px-6">
-                    <p className="text-xl font-bold">{featuredPost.title}</p>
+                    <p className="text-xl font-bold">{featuredPost?.title}</p>
                     <div className="flex items-center justify-between mt-8">
                         <Difficulty difficulty={featuredPost?.difficulties?.edges[0]?.node?.name} />
                         
                         <span className="flex items-center space-x-3 opacity-75 text-gray-600">
                             <span className="flex space-x-2 items-center" >
                                 <CalendarDaysIcon className="h-5 w-5 text-gray-600" />
-                                <span>{formatDate(featuredPost.date)}</span>
+                                <span>{formatDate(featuredPost?.date)}</span>
                             </span>
 
                             <span className="flex space-x-2 items-center">
                                 <ClockIcon className="h-5 w-5 text-gray-600" />
-                                <span>{getReadingTime(featuredPost.content)}</span>
+                                <span>{getReadingTime(featuredPost?.content)}</span>
                             </span>
                         </span>
                     </div>
                 </div>
             </div>
 
-        </div>
+        </a>
+        </Link>
         }
 
     </div>

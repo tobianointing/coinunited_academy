@@ -4,16 +4,18 @@ import {useCategories} from "../lib/hooks"
 import {titleCase} from "./TopMain"
 import OptimizedImage from "./OptimizedImage"
 import {formatDate, formatReadingTime, Difficulty} from "./LatestArticles"
+import Link from "next/link";
 
 interface CatPost extends Post {
     image: string
 }
 
 
-const CatArticle = ({title, image, difficulties, date, readingTime }:CatPost) => {
+const CatArticle = ({title, image, difficulties, date, readingTime, uri }:CatPost) => {
 
     return (
-        <div className="flex md:items-stretch flex-col  md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl border border-gray-100">
+        <Link href={uri}>
+        <a className="flex md:items-stretch flex-col  md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl border border-gray-100">
             <div className="w-full md:w-2/5 h-64 md:h-full">
                 <OptimizedImage src={image} className="w-full h-full" alt={title}  />
             </div>
@@ -37,9 +39,8 @@ const CatArticle = ({title, image, difficulties, date, readingTime }:CatPost) =>
                     </span>
                 </div>
             </div>
-
-
-        </div>
+        </a>
+        </Link>
     )
 }
 

@@ -128,6 +128,7 @@ export const getStaticProps = async () => {
         posts(first: 5) {
           nodes {
             title
+            uri
             featuredImage {
               node {
                 sourceUrl(size: POST_THUMBNAIL)
@@ -215,13 +216,13 @@ export const getStaticProps = async () => {
   });
 
   
-
-  const categories = await data.categories.nodes;
-  const posts = await data.posts.edges;
-  const featuredPost = await data?.featuredPosts?.nodes[0];
-  const difficulties = await data.difficulties.nodes; 
-  const tags = await data.tags.nodes;
-
+  try{
+    const categories = await data.categories.nodes;
+    const posts = await data.posts.edges;
+    const featuredPost = await data?.featuredPosts?.nodes[0];
+    const difficulties = await data.difficulties.nodes; 
+    const tags = await data.tags.nodes;
+  
   return  {
     props: {
       categories,
@@ -232,6 +233,10 @@ export const getStaticProps = async () => {
     },
     revalidate: 60
   }
-
+  }catch{
+    return {
+      notFound: true
+    }
+  }
 }
 

@@ -42,8 +42,11 @@ export type Post = {
          __typename: string 
         },
       __typename: string
-    }
-    
+    },
+    tags?: {
+        nodes: Tag[]
+      }
+
   }
 
 

@@ -3,3 +3,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    
+    .article-container img {
+        width: 100% !important;
+        border-radius: .8rem;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    .article-container a {
+        color: #d97706;
+        text-decoration: underline;
+    }
+    .article-container a:hover {
+        color: #a2641b;
+    }    
+}

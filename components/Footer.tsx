@@ -75,17 +75,17 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="md:col-span-2">
-                <img src="img/cu_transparent.svg" className="md:w-100 w-1/2" alt="coinunited" />            
+                <img src="/img/cu_transparent.svg" className="md:w-100 w-1/2" alt="coinunited" />            
                 <div className="items-center grid grid-cols-9 md:grid-cols-7 w-3/4 gap-3 md:gap-2 my-6">
-                    <img src="img/fb.svg" alt="facebook" className="w-8 h-8"/>
-                    <img src="img/insta.svg" alt="instagram" className="w-8 h-8"/>
-                    <img src="img/twitter.svg" alt="twitter" className="w-8 h-8"/>
-                    <img src="img/linkedin.svg" alt="linkedin" className="w-8 h-8"/>
-                    <img src="img/reddit.svg" alt="reddit" className="w-8 h-8"/>
-                    <img src="img/tg.svg" alt="telegram" className="w-8 h-8"/>
-                    <img src="img/youtube.svg" alt="youtube" className="w-8 h-8"/>
-                    <img src="img/discord.svg" alt="discord" className="w-8 h-8"/>
-                    <img src="img/line.svg" alt="line" className="w-8 h-8"/>
+                    <img src="/img/fb.svg" alt="facebook" className="w-8 h-8"/>
+                    <img src="/img/insta.svg" alt="instagram" className="w-8 h-8"/>
+                    <img src="/img/twitter.svg" alt="twitter" className="w-8 h-8"/>
+                    <img src="/img/linkedin.svg" alt="linkedin" className="w-8 h-8"/>
+                    <img src="/img/reddit.svg" alt="reddit" className="w-8 h-8"/>
+                    <img src="/img/tg.svg" alt="telegram" className="w-8 h-8"/>
+                    <img src="/img/youtube.svg" alt="youtube" className="w-8 h-8"/>
+                    <img src="/img/discord.svg" alt="discord" className="w-8 h-8"/>
+                    <img src="/img/line.svg" alt="line" className="w-8 h-8"/>
                 </div>                
             </div>  
         </div>
