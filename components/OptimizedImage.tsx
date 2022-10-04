@@ -10,7 +10,7 @@ interface OptimizedImageProps {
 const OptimizedImage = ({src, alt, className}:OptimizedImageProps) => {
 
   return (
-      <div className={`relative ${className}`}>
+      <div className={`relative ${className} overflow-hidden`}>
           <Image src={src ? src : '/img/default.jpg'} alt={alt} layout="fill" objectFit="cover" loading="lazy"/>
       </div>
   )

@@ -8,7 +8,6 @@ import Top from '../components/Top'
 import TopMainDesktop from '../components/TopMain'
 import advert_one from '../public/img/advert_one.png'
 import GlossarySection from '../components/GlossarySection'
-import Footer from '../components/Footer'
 import {client} from '../lib/apollo'
 import { DocumentNode, gql } from '@apollo/client'
 import { IData } from '../custom_interface'
@@ -110,12 +109,6 @@ const Home = (props:IData) => {
                     </div>
                 </div>
           </Container>
-        </div>
-
-        <div className='bg-footer'>
-            <Container>
-               <Footer />
-            </Container>
         </div>
       </div>
     </main>
@@ -239,9 +232,6 @@ export const getStaticProps = async () => {
     },
     revalidate: 60
   }
-
-
-
 
 }
 

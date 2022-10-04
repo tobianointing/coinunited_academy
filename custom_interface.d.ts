@@ -35,6 +35,15 @@ export type Post = {
     readingTime?: string,
     difficulties?: Difficulty,
     content?: string,
+    author?: {
+      node: { 
+        firstName: string, 
+        lastName: string,
+         __typename: string 
+        },
+      __typename: string
+    }
+    
   }
 
 

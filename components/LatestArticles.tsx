@@ -3,7 +3,7 @@ import { Allposts, Post } from "../custom_interface"
 import { usePosts} from "../lib/hooks"
 import OptimizedImage, {ContainImage} from "./OptimizedImage"
 import { titleCase } from "./TopMain"
-
+import Link from "next/link";
 
 export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
   let src:string, bg:string;
@@ -59,7 +59,8 @@ export const formatReadingTime = (minutes?: string) => {
 
 
 export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) => 
-  <div className="rounded-2xl relative  bg-white flex flex-col shadow-lg hover:shadow-2xl overflow-hidden">
+  
+  <Link href={uri}><a  className="rounded-2xl relative  bg-white flex flex-col shadow-lg hover:shadow-2xl overflow-hidden">
     <div className="relative">
       <OptimizedImage src={featuredImage?.node?.sourceUrl} alt="featured image" className="h-56 w-full"/>
       <span className="px-2 p-1 bg-black rounded-md absolute right-2 text-white text-sm top-3">
@@ -86,13 +87,17 @@ export const Article = ({title, uri, featuredImage, categories, date, readingTim
           </div>
         </div>
     </div>
-</div> 
+</a></Link> 
 
 
 
-const LatestArticles = () => {
+const LatestArticles = ({props_post}:{props_post?:Allposts[]}) => {
+  let first_six_posts;
   const posts:Allposts[] = usePosts(state => state.posts)
-  const first_six_posts = posts?.slice(0, 6)
+  
+  props_post? first_six_posts = props_post : first_six_posts = posts?.slice(0, 6);
+  
+
   return (
     <div className="mt-5">
         <div className="flex justify-between items-center">
