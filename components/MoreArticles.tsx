@@ -76,14 +76,14 @@ const MoreArticles = () => {
         <div className="grid grid-cols-1 my-6 md:grid-cols-3 space-y-6 md:space-y-0 md:gap-8">
             {rest_after_six?.length > 0 && rest_after_six.map((post) => 
                 <Article 
-                    key={post?.node?.id}
-                    title={post?.node?.title}
-                    uri={post?.node?.uri}
-                    featuredImage={post?.node?.featuredImage}
-                    categories={post?.node?.categories}
-                    date={post?.node?.date}
-                    readingTime = {post?.node?.readingTime}
-                    difficulties = {post?.node?.difficulties}
+                    key={post?.id}
+                    title={post?.title}
+                    uri={post.translation?.uri}
+                    featuredImage={post?.featuredImage}
+                    categories={post?.categories}
+                    date={post?.date}
+                    readingTime = {post?.readingTime}
+                    difficulties = {post?.difficulties}
                 />
                 )
             }

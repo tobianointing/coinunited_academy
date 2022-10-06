@@ -1,9 +1,11 @@
 import { CalendarDaysIcon, ClockIcon, ChevronRightIcon, PlusIcon } from "@heroicons/react/24/solid"
-import { Allposts, Post } from "../custom_interface"
+import { Post } from "../custom_interface"
 import { usePosts} from "../lib/hooks"
-import OptimizedImage, {ContainImage} from "./OptimizedImage"
+import OptimizedImage from "./OptimizedImage"
 import { titleCase } from "./TopMain"
 import Link from "next/link";
+import { useEffect } from 'react';
+import { NextRouter, useRouter } from 'next/router';
 
 export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
   let src:string, bg:string;
@@ -58,9 +60,9 @@ export const formatReadingTime = (minutes?: string) => {
 }
 
 
-export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) => 
-  
-  <Link href={uri}><a  className="rounded-2xl relative  bg-white flex flex-col shadow-lg hover:shadow-2xl overflow-hidden">
+export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) =>{ 
+
+  return <Link href={uri? uri : '/'}><a  className="rounded-2xl relative  bg-white flex flex-col shadow-lg hover:shadow-2xl overflow-hidden">
     <div className="relative">
       <OptimizedImage src={featuredImage?.node?.sourceUrl} alt="featured image" className="h-56 w-full"/>
       <span className="px-2 p-1 bg-black rounded-md absolute right-2 text-white text-sm top-3">
@@ -88,15 +90,27 @@ export const Article = ({title, uri, featuredImage, categories, date, readingTim
         </div>
     </div>
 </a></Link> 
+}
 
 
-
-const LatestArticles = ({props_post}:{props_post?:Allposts[]}) => {
+const LatestArticles = ({props_post}:{props_post?:Post[]}) => {
   let first_six_posts;
-  const posts:Allposts[] = usePosts(state => state.posts)
-  
+  const posts:Post[] = usePosts(state => state.posts)
+  const router:NextRouter = useRouter();
   props_post? first_six_posts = props_post : first_six_posts = posts?.slice(0, 6);
   
+
+  // useEffect(() => {
+  //   router.events.on('routeChangeComplete', () => {
+  //     router.reload()
+  //   });
+
+  //   return () => {
+  //     router.events.off('routeChangeComplete', () => {
+  //       router.reload()
+  //     });
+  //   }
+  // }, [])
 
   return (
     <div className="mt-5">
@@ -114,14 +128,14 @@ const LatestArticles = ({props_post}:{props_post?:Allposts[]}) => {
         <div className="grid grid-cols-1 my-6 md:grid-cols-3 space-y-6 md:space-y-0 md:gap-8 ">
         {first_six_posts?.length > 0 && first_six_posts.map((post) => 
             <Article 
-                key={post.node.id}
-                title={post.node.title}
-                uri={post.node.uri}
-                featuredImage={post.node.featuredImage}
-                categories={post.node.categories}
-                date={post.node.date}
-                readingTime = {post.node.readingTime}
-                difficulties = {post.node.difficulties}
+                key={post.id}
+                title={post.title}
+                uri={post.translation?.uri}
+                featuredImage={post.featuredImage}
+                categories={post.categories}
+                date={post.date}
+                readingTime = {post.readingTime}
+                difficulties = {post.difficulties}
              />
             )
           }

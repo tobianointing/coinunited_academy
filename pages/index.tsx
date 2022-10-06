@@ -14,6 +14,8 @@ import { IData } from '../custom_interface'
 import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags} from '../lib/hooks'
 import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
+import { GetStaticProps } from 'next'
+import { features } from 'process'
 
 const Home = (props:IData) => {
   const {categories, posts, featuredPost, difficulties, tags} = props
@@ -29,7 +31,7 @@ const Home = (props:IData) => {
     setFeaturedPost(featuredPost);
     setDifficulties(difficulties);
     setTags(tags);
-  }, [])
+  }, [posts, categories, featuredPost,difficulties,tags])
 
 
   return (
@@ -119,53 +121,24 @@ const Home = (props:IData) => {
 export default Home
 
 
-export const getStaticProps = async () => {
+export const getStaticProps:GetStaticProps = async ({locale}) => {
+  
   const GET_ALL_POSTS:DocumentNode = gql`
-  query GetPostsByCategory {
-    categories(where: {orderby: COUNT, order: DESC}, first: 5) {
-      nodes {
-        name
-        posts(first: 5) {
-          nodes {
-            title
-            uri
-            featuredImage {
-              node {
-                sourceUrl(size: POST_THUMBNAIL)
-              }
-            }
-            readingTime
-            date
-            difficulties(first: 1) {
-              edges {
-                node {
-                  name
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    posts(first: 12, where: {orderby: {order: DESC, field: DATE}}) {
-      edges {
-        node {
-          id
+  query GetPostsByCategory($language: LanguageCodeFilterEnum!) {
+  categories(where: {orderby: COUNT, order: DESC, language: $language}, first: 5) {
+    nodes {
+      name
+      posts(first: 5) {
+        nodes {
           title
           uri
           featuredImage {
             node {
-              altText
               sourceUrl(size: POST_THUMBNAIL)
             }
           }
-          categories {
-            nodes {
-              name
-            }
-          }
-          date
           readingTime
+          date
           difficulties(first: 1) {
             edges {
               node {
@@ -173,65 +146,108 @@ export const getStaticProps = async () => {
               }
             }
           }
-        }
-      }
-    }
-    featuredPosts(first: 1) {
-      nodes {
-        title
-        featuredImage {
-          node {
-            sourceUrl
+          translation(language: EN) {
+            uri
           }
         }
-        uri
-        id
-        difficulties(first: 1) {
-          edges {
-            node {
-              name
-            }
-          }
-        }
-        date
-        content
-      }
-    }
-    difficulties {
-      nodes {
-        id
-        name
-      }
-    }
-    tags(first: 12, where: {orderby: COUNT, order: DESC}) {
-      nodes {
-        id
-        name
       }
     }
   }
+  posts(
+    first: 12
+    where: {orderby: {order: DESC, field: DATE}, language: $language}
+  ) {
+    nodes {
+      id
+      title
+      uri
+      featuredImage {
+        node {
+          altText
+          sourceUrl(size: POST_THUMBNAIL)
+        }
+      }
+      categories {
+        nodes {
+          name
+        }
+      }
+      date
+      readingTime
+      difficulties(first: 1) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+      translation(language: EN) {
+            uri
+        }
+    }
+  }
+  featuredPosts(
+    first: 1
+    where: {orderby: {order: DESC, field: DATE}, language: $language}
+  ) {
+    nodes {
+      title
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+      uri
+      id
+      difficulties(first: 1) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+      date
+      content
+    }
+  }
+  difficulties {
+    nodes {
+      id
+      name
+    }
+  }
+  tags(first: 12, where: {orderby: COUNT, order: DESC}) {
+    nodes {
+      id
+      name
+    }
+  }
+}
   `
   const {data} = await client.query({
-    query: GET_ALL_POSTS
+    query: GET_ALL_POSTS,
+    variables: {
+      language: locale?.toLocaleUpperCase()
+    }
   });
 
   
   try{
     const categories = await data.categories.nodes;
-    const posts = await data.posts.edges;
+    const posts = await data.posts.nodes;
     const featuredPost = await data?.featuredPosts?.nodes[0];
     const difficulties = await data.difficulties.nodes; 
     const tags = await data.tags.nodes;
   
   return  {
     props: {
-      categories,
-      posts,
-      featuredPost,
-      difficulties,
-      tags
+      categories: categories ? categories : [],
+      posts: posts ? posts : [],
+      featuredPost : featuredPost ? featuredPost : {},
+      difficulties : difficulties ? difficulties : [],
+      tags: tags ? tags : []
     },
-    revalidate: 60
+    revalidate: 150
   }
   }catch{
     return {

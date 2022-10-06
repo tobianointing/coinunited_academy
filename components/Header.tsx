@@ -2,8 +2,17 @@ import {Bars3Icon ,ArrowLongRightIcon} from '@heroicons/react/24/solid'
 import { Dropdown } from "flowbite-react";
 import { ContainImage } from './OptimizedImage';
 import Link from 'next/link';
+import { NextRouter, useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation'
+
 
 const Header = () => {
+  const router:NextRouter = useRouter();
+  const { t } = useTranslation('common');
+  const {locale:activeLocale, locales, asPath} = router;
+  const availableLocales = locales?.filter((locale) => locale !== activeLocale);
+
+
   return (
     <div className='sticky z-10 top-0'>
     <div className='flex items-center justify-between px-4 p-3'>
@@ -20,37 +29,28 @@ const Header = () => {
 
                 <img src="/img/menu.png" alt="menu icon" className='w-4 h-4'/>
 
-                <button className='rounded-md hidden ms:inline-block bg-gradient-to-r from-sky-600 via-sky-500 to-sky-300 px-3 p-1 text-white'>Get 120 USD</button>
+                <button className='rounded-md hidden ms:inline-block bg-gradient-to-r from-sky-600 via-sky-500 to-sky-300 px-3 p-1 text-white'>{t('get-120-usd')}</button>
                 
-                <Dropdown label="Buy crypto" inline={true}>
+                <Dropdown label={t('buy-crypto')} inline={true}>
                   <Dropdown.Item>
-                    <span className='w-24 text-center'>Buy</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <span className='w-24 text-center'>Sell</span>
+                    <span className='w-24 text-center'>{t('buy')}</span>
                   </Dropdown.Item>
                 </Dropdown>
 
-                <span >Markets</span>
+                <span>{t('markets')}</span>
                 
-                <Dropdown label="Trade" inline={true}>
+                <Dropdown label={t('trade')} inline={true}>
                 <Dropdown.Item>
-                    <span className='w-24 text-center'>Buy</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <span className='w-24 text-center'>Sell</span>
+                    <span className='w-24 text-center'>{t('buy')}</span>
                   </Dropdown.Item>
                 </Dropdown>
                 
-                <Dropdown label="Earn" inline={true}>
-                <Dropdown.Item>
-                    <span className='w-24 text-center'>Buy</span>
-                  </Dropdown.Item>
+                <Dropdown label={t("earn")} inline={true}>
                   <Dropdown.Item>
-                    <span className='w-24 text-center'>Sell</span>
+                    <span className='w-24 text-center'>{t('buy')}</span>
                   </Dropdown.Item>
                 </Dropdown>
-                <a href="#">NFT</a>
+                <a href="#">{t('NFT')}</a>
             </div>  
           </div>
         </div>
@@ -59,26 +59,49 @@ const Header = () => {
 
 
         <div className='md:flex hidden text-sm ms:space-x-4 space-x-3 opacity-90 font-semibold items-center'>
-              <a href="#">Login</a>
-              <button className='bg-amber-600 p-1 px-4 rounded-md text-white'>Register</button>
+              <a href="#">{t('login')}</a>
+              <button className='bg-amber-600 p-1 px-4 rounded-md text-white'>{t('register')}</button>
 
-              <a href="#">Wallet</a>
-              <Dropdown label="Download" inline={true}>
+              <a href="#">{t('wallet')}</a>
+              <Dropdown label={t("download")} inline={true}>
                 <Dropdown.Item>
-                    <span className='text-center'>Link 1</span>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <span className='text-center'>Link 2</span>
+                    <span className='text-center'>{t('buy')}</span>
                   </Dropdown.Item>
               </Dropdown>
+
+              <Dropdown label={t("language")} inline={true}>
+                {
+                  availableLocales?.map(locale => {
+                    let local_name;
+                    switch (locale) {
+                      case 'en':
+                        local_name = 'English';
+                        break;
+                      case 'zh':
+                        local_name = '中文 (中国)';
+                        break;
+                      default:
+                        local_name = locale
+                    }
+                    
+                    return <Dropdown.Item key={locale}>
+                              <Link href={asPath} locale={locale}>
+                                <a className='text-center'>{local_name}</a>
+                              </Link>
+                            </Dropdown.Item>}
+                  )
+                }
+              </Dropdown>
+
+
         </div>
     </div>
    
    <div className='bg-orange-100  flex justify-center font-semibold items-center p-3'>
         <div className='flex items-center text-sm ms:space-x-3 space-x-2'>
-            <span>Sign up for $120 Bonus</span>
+            <span>{t('sign-up-for-120-bonus')}</span>
             <ArrowLongRightIcon  className='w-4 h-4'/>
-            <button className='bg-amber-600 p-1 ms:px-4 px-2 rounded-md text-white'>Register now</button>
+            <button className='bg-amber-600 p-1 ms:px-4 px-2 rounded-md text-white'>{t('Register now')}</button>
         </div>
    </div>
   </div>

@@ -28,7 +28,7 @@ export type Post = {
     __typename?: string,
     id?: string,
     title: string,
-    uri : string,
+    uri? : string,
     featuredImage?: Object<featuredImage>,
     categories?: Object<postCategory>
     date?: string,
@@ -45,7 +45,10 @@ export type Post = {
     },
     tags?: {
         nodes: Tag[]
-      }
+      },
+    translation?: {
+      uri: string,
+    }
 
   }
 
@@ -70,10 +73,6 @@ export type category = {
     nodes: category[],  
 }
 
-export interface Allposts {
-    __typename: string;
-    node: Post;
-  }
 
 interface IDifficulty {
     id: string;
@@ -83,7 +82,7 @@ interface IDifficulty {
   
 export interface IData {
     categories: category[];
-    posts: Allposts[];
+    posts: Post[];
     featuredPost: Post;
     difficulties: IDifficulty[];
     tags: Tag[];
@@ -96,8 +95,8 @@ export interface ICatStore {
 }
 
 export interface IPostStore{
-  posts: Array<Allposts>
-  setPosts: (state:Allposts[]) => void
+  posts: Array<Post>
+  setPosts: (state:Post[]) => void
 }
 
 

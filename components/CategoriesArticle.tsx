@@ -14,7 +14,7 @@ interface CatPost extends Post {
 const CatArticle = ({title, image, difficulties, date, readingTime, uri }:CatPost) => {
 
     return (
-        <Link href={uri}>
+        <Link href={uri ? uri : '/' }>
         <a className="flex md:items-stretch flex-col  md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl border border-gray-100">
             <div className="w-full md:w-2/5 h-64 md:h-full">
                 <OptimizedImage src={image} className="w-full h-full" alt={title}  />
@@ -63,12 +63,12 @@ const CategoryBlock = ({name, posts}:{name:string, posts?:Array<Post>}) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 my-7 gap-6">
             {
-                posts?.map((post) => 
+                posts?.map((post, index) => 
                 <CatArticle  
-                    key={post.id}
+                    key={index}
                     title={post.title} 
                     image = {post.featuredImage?.node?.sourceUrl}
-                    uri = {post.uri}
+                    uri={post.translation?.uri}
                     date = {post.date}
                     readingTime = {post.readingTime}
                     difficulties = {post.difficulties}
