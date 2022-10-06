@@ -100,7 +100,7 @@ const Home = (props:IData) => {
                         <p className='my-4 mt-6 font-bold text-lg'>{t("Summer Limited Offer")}! <br /> {t("free-subscription")}</p>
                         
                         <div className='flex items-center space-x-5 justify-center md:justify-start my-9'>
-                            <input type="text" placeholder='Enter your email address' className='border placeholder:font-semibold border-gray-300 rounded-sm p-1 bg-gray-100 px-2 w-80' />
+                            <input type="text" placeholder={t('Enter your email address')} className='border placeholder:font-semibold border-gray-300 rounded-sm p-1 bg-gray-100 px-2 w-80' />
                             <button className='bg-gray-100 px-4 p-1 border border-gray-300 font-semibold rounded-sm'>Subscribe</button>
                         </div>                      
 

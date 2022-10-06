@@ -1,12 +1,14 @@
-import { ContainImage } from "./OptimizedImage";
+import useTranslation from "next-translate/useTranslation";
 
 const Footer = () => {
+    const { t } = useTranslation('common')
+
   return (
     <div className="text-white md:text-sm my-2">
         
         <div className="flex items-center font-bold border-b border-gray-500 py-7 justify-between">
-            <h3 className="text-2xl md:text-4xl">Start Trading Now</h3>
-            <button className="bg-amber-600 px-2 md:px-5 p-1 rounded-md">Get Started</button>
+            <h3 className="text-2xl md:text-4xl">{t("Start Trading Now")}</h3>
+            <button className="bg-amber-600 px-2 md:px-5 p-1 rounded-md">{t("Get Started")}</button>
         </div>
         
         <div className="my-8 mb-24 grid grid-cols-1 space-y-10 md:space-y-0 md:grid-cols-6 md:gap-[7rem]">
@@ -92,7 +94,7 @@ const Footer = () => {
 
         <div className="flex justify-center flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-12 text-xs md:text-sm">
                 <p> &copy; 2020-{new Date().getFullYear()} CoinUnited.io. All rights reserved.</p>
-                <p>Terms of service | Privacy Terms</p>
+                <p>{t("terms-of-service")}</p>
         </div>
 
     </div>
