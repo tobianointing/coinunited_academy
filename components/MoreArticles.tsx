@@ -4,6 +4,8 @@ import { usePosts } from "../lib/hooks"
 import  {ContainImage} from "./OptimizedImage"
 import { titleCase } from "./TopMain"
 import { useDifficuties, useTags } from "../lib/hooks"
+import useTranslation from 'next-translate/useTranslation'
+
 
 
 const Tags = ({name}:{name:string}) =>{
@@ -46,19 +48,21 @@ const MoreArticles = () => {
     const rest_after_six = posts?.slice(6, posts.length)
     const difficulties = useDifficuties(state => state.difficulties)
     const tags = useTags(state => state.tags)
+    const { t } = useTranslation('common')
+
 
     return (
     <div className="my-5">
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-16 gap-6">
             <div>
-                <p className="font-semibold">Popular tags</p>   
+                <p className="font-semibold">{t("Popular tags")}</p>   
                 <div className="my-4 grid grid-cols-4 gap-3">
                     { tags.length > 0 && tags.map((tag) => <Tags key={tag.id} name={tag.name} />)}
                 </div>
             </div>
 
             <div>
-                <p className="font-semibold">Difficulty</p>
+                <p className="font-semibold">{t("Difficulty")}</p>
 
                 <div className="my-4 mb-7 grid grid-cols-3 gap-3">
                     {difficulties.length > 0 && difficulties.map((difficulty) => (
@@ -88,17 +92,17 @@ const MoreArticles = () => {
                 )
             }
         </div>
-
-        <div className="flex justify-center mt-10">
-            <button className="rounded-md flex items-center space-x-1 justify-center p-1 px-2 text-gray-400 bg-white shadow-md">
-              <span>SEE ALL ARTICLES</span> 
-              <span className="text-black font-bold flex items-center">
-                <ChevronRightIcon className="h-4 w-4"/>
-                <ChevronRightIcon className="h-4 w-4"/>
-              </span>
-            </button>
-        </div>
-
+        {rest_after_six?.length > 0 &&
+            <div className="flex justify-center mt-10">
+                <button className="rounded-md flex items-center space-x-1 justify-center p-1 px-2 text-gray-400 bg-white shadow-md">
+                <span>{t("SEE ALL ARTICLES")}</span> 
+                <span className="text-black font-bold flex items-center">
+                    <ChevronRightIcon className="h-4 w-4"/>
+                    <ChevronRightIcon className="h-4 w-4"/>
+                </span>
+                </button>
+            </div>
+        }
     </div>
   )
 }

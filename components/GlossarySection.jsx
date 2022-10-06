@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 
 const GlossarySection = () => {
+    
   return (
     <div className="my-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7">

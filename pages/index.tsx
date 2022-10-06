@@ -15,6 +15,7 @@ import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags} from 
 import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
 import { GetStaticProps } from 'next'
+import useTranslation from 'next-translate/useTranslation'
 
 
 
@@ -34,6 +35,7 @@ const Home = (props:IData) => {
     setTags(tags);
   }, [posts, categories, featuredPost,difficulties,tags])
 
+  const { t } = useTranslation('common')
 
   return (
     <main className='mt-2'>
@@ -63,14 +65,14 @@ const Home = (props:IData) => {
             </Container>
         </div>
 
-      {posts?.length > 6 &&
+      
           <div className='bg-gray-100'>
             <Container>
               <MoreArticles />
             </Container>
           
           </div>
-        }
+      
         <div className="bg-white">
           <Container>
               <CategoriesArticle />
@@ -93,9 +95,9 @@ const Home = (props:IData) => {
 
                     <div className='md:w-3/4 w-full'>
                         <div className="text-center md:text-left">
-                        <h3 className='font-bold text-3xl md:text-5xl w-full md:tracking-[.06em]'>Make Every Minute Count.</h3>
+                        <h3 className='font-bold text-3xl md:text-5xl w-full md:tracking-[.06em]'>{t("make-every-minute-count")}</h3>
                         
-                        <p className='my-4 mt-6 font-bold text-lg'>Summer Limited Offer! <br /> FREE subscription to first-hand exclusive crypto news.</p>
+                        <p className='my-4 mt-6 font-bold text-lg'>{t("Summer Limited Offer")}! <br /> {t("free-subscription")}</p>
                         
                         <div className='flex items-center space-x-5 justify-center md:justify-start my-9'>
                             <input type="text" placeholder='Enter your email address' className='border placeholder:font-semibold border-gray-300 rounded-sm p-1 bg-gray-100 px-2 w-80' />
@@ -106,7 +108,7 @@ const Home = (props:IData) => {
                         </div>
                         <div className="flex font-bold items-center justify-center md:justify-start space-x-3">
                             <input type="checkbox" name="subscribe" /> <br />
-                            <span>I have read and agree to CoinUnited.io's <span className='text-amber-600'>Terms of Service</span></span>
+                            <span>{t("i-agree")} <span className='text-amber-600'>{t("Terms of Service")}</span></span>
                         </div>
 
                     </div>

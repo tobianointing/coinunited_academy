@@ -17,7 +17,7 @@ const TopMainDesktop = () => {
          <ContainImage src="/img/cu_academy_logo.png" alt="coinunited logo" className="w-64 h-20 mx-auto" />
         <ul className="flex items-center justify-center space-x-10 text-sm font-semibold my-3">
             <li>{t("Home")}</li>            
-            <Dropdown label="Articles" inline={true}>
+            <Dropdown label={t("Articles")} inline={true}>
                     {
                         categories?.map((category, index) => (
                             category.name !== 'uncategorized' &&

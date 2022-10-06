@@ -4,8 +4,9 @@ import { usePosts} from "../lib/hooks"
 import OptimizedImage from "./OptimizedImage"
 import { titleCase } from "./TopMain"
 import Link from "next/link";
-import { useEffect } from 'react';
 import { NextRouter, useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation'
+
 
 export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
   let src:string, bg:string;
@@ -98,26 +99,14 @@ const LatestArticles = ({props_post}:{props_post?:Post[]}) => {
   const posts:Post[] = usePosts(state => state.posts)
   const router:NextRouter = useRouter();
   props_post? first_six_posts = props_post : first_six_posts = posts?.slice(0, 6);
-  
-
-  // useEffect(() => {
-  //   router.events.on('routeChangeComplete', () => {
-  //     router.reload()
-  //   });
-
-  //   return () => {
-  //     router.events.off('routeChangeComplete', () => {
-  //       router.reload()
-  //     });
-  //   }
-  // }, [])
+  const { t } = useTranslation('common')
 
   return (
     <div className="mt-5">
         <div className="flex justify-between items-center">
-            <p className="font-bold text-xl opacity-90">Latest Articles</p>
+            <p className="font-bold text-xl opacity-90">{t("Latest Articles")}</p>
             <button className="rounded-md flex items-center space-x-1 justify-center p-1 px-2 text-gray-400 bg-white shadow-md">
-              <span>SEE ALL ARTICLES</span> 
+              <span>{t("SEE ALL ARTICLES")}</span> 
               <span className="text-black font-bold flex items-center">
                 <ChevronRightIcon className="h-4 w-4"/>
                 <ChevronRightIcon className="h-4 w-4"/>
