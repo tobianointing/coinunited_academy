@@ -15,7 +15,8 @@ import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags} from 
 import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
 import { GetStaticProps } from 'next'
-import { features } from 'process'
+
+
 
 const Home = (props:IData) => {
   const {categories, posts, featuredPost, difficulties, tags} = props

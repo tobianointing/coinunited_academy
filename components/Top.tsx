@@ -4,21 +4,20 @@ import { Difficulty, formatDate } from "./LatestArticles"
 import OptimizedImage from "./OptimizedImage"
 import Link from "next/link";
 import useTranslation from 'next-translate/useTranslation'
+import { parse } from 'node-html-parser'
 
-
-const getReadingTime = (htmlstring?:string) => {
+export const getReadingTime = (htmlstring?:string) => {
     if (!htmlstring) return '1m'
+
     const wordsPerMinute = 225;
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(
+    const doc = parse(
         `
         <div id="content">
             ${htmlstring}
         </div>
-        `
-        , 'text/html');
+        `);
 
-    const text = doc.body.textContent || '';
+    const text = doc.textContent || '';
 
     const numberOfWords = text.split(/\s/g).length;
     const minutes = Math.ceil(numberOfWords / wordsPerMinute);
