@@ -9,9 +9,14 @@ import { useState } from "react"
 import { Tags } from "../components/MoreArticles"
 import useTranslation from "next-translate/useTranslation"
 import {Difficulty} from "../components/MoreArticles"
-
+import { GetServerSideProps } from "next"
+import {FILTER_POSTS_BY_SLUG_AND_DIFFICULTY, GET_POSTS_BY_QUERY, GET_POSTS_BY_QUERY_2} from "../lib/queries"
+import { client } from "../lib/apollo"
 
 type Mode = "grid" | "list"
+
+
+const range = (start=1, stop:number, step = 1) => Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step)
 
 
 const Filters = ({tags, difficulties}:{tags:Tag[], difficulties:IDifficulty[]})=>{
@@ -33,14 +38,9 @@ const Filters = ({tags, difficulties}:{tags:Tag[], difficulties:IDifficulty[]})=
                 ))
             }
         </div>
-
-        <p className="font-semibold">Reading Time</p>
-
     </div>
 </div>
 }
-
-
 
 const ListArticle = ({title, featuredImage, difficulties, date, readingTime, uri }:Post) => {
     return (
@@ -76,48 +76,47 @@ const ListArticle = ({title, featuredImage, difficulties, date, readingTime, uri
 
 
 
+const fetchPost_default = async (query:string, page:number, language:string) => {
+    const {data} = await client.query({
+        query: GET_POSTS_BY_QUERY_2,
+        variables: {
+            search: query,
+            language: language,
+            page: ((page-1)*3)
+            }}
+        )
+
+    return data?.posts?.nodes
+}
 
 
-const Search= () => {
 
-    const tags = [
-        {id:'1', name:"Javascript"},
-        {id:'2', name:"React"},
-        {id:'3', name:"Nextjs"},
-        {id:'4', name:"Typescript"}
-    ]    
-
-    const difficulties = [
-        {id:'1', name:"Beginner"},
-        {id:'2', name:"Intermediate"},
-        {id:'3', name:"Advanced"}
-    ]
-
+const Search= ({posts:serverArticles, resultTotal, query, difficulties, tags}:
+    {posts:Post[], resultTotal:number, query:string, difficulties:IDifficulty[], tags:Tag[] }) => {
     const [mode, setMode] = useState<Mode>('grid')
     const [sort, setSort] = useState<boolean>(false)    
-    
-    const articles= 
-        {
-            title: "This is a title",
-            uri: "/uri",
-            featuredImage: {
-                node: {
-                    altText: "altText",
-                    sourceUrl: "/img/featured.jpg"
-                }
-            },
-            categories: {
-                nodes: [
-                    {
-                        name: "name"
-                        
-                    }]
-            },
-            date: "2021-01-01",
-            readingTime: "1",
-            
+    const [articles, setArticles] = useState<Post[]>(serverArticles)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const pagination = ():Array<number> => {
+        try{
+            return range(1, (Math.ceil(resultTotal/3))+1)
         }
-    
+        catch{
+            return [1,2]
+        }
+    }
+
+    const fetchPaginatedDataDefault = (page:number) =>{
+        fetchPost_default(query, page, 'EN').then((data)=>{
+           if (data){
+                setArticles(data)
+                setCurrentPage(page)                
+           }
+        }).catch()
+    } 
+
+
+
     return (
         <div>
             <div className='bg-white'>
@@ -163,31 +162,57 @@ const Search= () => {
             </div>
             <div className="bg-gray-100">
                 <Container>
-                    <h3 className="text-xl font-bold">Article(23)</h3>
+                    <h3 className="text-xl font-bold">Articles ({resultTotal})</h3>
                     <div>
                         {mode === "grid" ? 
                         <div className="grid grid-cols-1 gap-4 my-6 md:grid-cols-3">
-                            <Article 
-                                title={articles.title}
-                                uri={articles.uri}
-                                featuredImage={articles.featuredImage}
-                                categories={articles.categories}
-                                date={articles.date}
-                                readingTime={articles.readingTime} 
-                            />
+                            {articles?.map(article => 
+                                <Article 
+                                    key={article.id}
+                                    title={article.title}
+                                    uri={article.uri}
+                                    featuredImage={article.featuredImage}
+                                    categories={article.categories}
+                                    date={article.date}
+                                    readingTime={article.readingTime} 
+                                    difficulties={article.difficulties}
+                                />
+                            )
+                            }
                          </div>
                         :
                         <div className="grid grid-cols-1 gap-6 my-7">
-                            <ListArticle
-                                title={articles.title}
-                                uri={articles.uri}
-                                featuredImage={articles.featuredImage}
-                                categories={articles.categories}
-                                date={articles.date}
-                                readingTime={articles.readingTime}
+                            { articles?.map(article =>
+                                <ListArticle
+                                key={article.id}
+                                title={article.title}
+                                uri={article.uri}
+                                featuredImage={article.featuredImage}
+                                categories={article.categories}
+                                date={article.date}
+                                readingTime={article.readingTime}
                             />
+                            )
+                        }
                         </div>
                         }
+                    </div>
+
+                    <div className="flex items-center my-7 justify-center">
+                        <div className="flex space-x-3 items-center text-gray-400 justify-between font-bold">
+                            {currentPage > 1 && 
+                                <button onClick={() => fetchPaginatedDataDefault(currentPage-1)} className="border-2 px-5 p-3 rounded-sm">{'<'}</button>}
+                            {pagination().map(page =>
+                              <button key={page} 
+                                    onClick={() => fetchPaginatedDataDefault(page)}
+                                    className={currentPage===page? "border-amber-500 text-amber-500 border-2 px-5 p-3 rounded-sm" :"border-2 px-5 p-3 rounded-sm"}>{page}</button>
+                              )
+                            }
+                            { currentPage < pagination().length && <button 
+                                onClick={() => fetchPaginatedDataDefault(currentPage+1)}
+                                className="border-2  px-5 p-3 rounded-sm">{'>'}</button>
+                            }
+                        </div>
                     </div>
                 </Container>
 
@@ -197,6 +222,45 @@ const Search= () => {
         </div>
     )
 }
-
-
 export default Search
+
+export const getServerSideProps:GetServerSideProps = async (context) => {
+    const {query} = context.query
+    const {data} = await client.query({
+        query: GET_POSTS_BY_QUERY,
+        variables: {
+            search: query,
+            language: 'EN',
+            page:0
+        }
+    })
+    
+    const posts = data?.posts?.nodes
+    const resultTotal = data?.posts?.pageInfo?.offsetPagination?.total
+    const difficulties = data.difficulties.nodes; 
+    const tags = data.tags.nodes;
+
+
+    return{
+        props: {
+            posts: posts ? posts : [],
+            resultTotal: resultTotal ? resultTotal : 0,
+            query: query ? query : '',
+            difficulties : difficulties ? difficulties : [],
+            tags: tags ? tags : []
+        }
+    }
+}
+
+
+
+// const {data} = await client.query({
+//     query: FILTER_POSTS_BY_SLUG_AND_DIFFICULTY,
+//     variables: {
+//         search: query,
+//         tags: ['Crypto'],
+//         difficulties: ['advanced'],
+//         language: 'EN'
+//     }
+// })
+

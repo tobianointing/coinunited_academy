@@ -16,7 +16,7 @@ import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
 import { GetStaticProps } from 'next'
 import useTranslation from 'next-translate/useTranslation'
-
+import {POST_DATA_FRAGMENT} from '../lib/fragments'
 
 
 const Home = (props:IData) => {
@@ -127,31 +127,15 @@ export default Home
 export const getStaticProps:GetStaticProps = async ({locale}) => {
   
   const GET_ALL_POSTS:DocumentNode = gql`
+  ${POST_DATA_FRAGMENT}
+
   query GetPostsByCategory($language: LanguageCodeFilterEnum!) {
   categories(where: {orderby: COUNT, order: DESC, language: $language}, first: 5) {
     nodes {
       name
       posts(first: 5) {
         nodes {
-          title
-          uri
-          featuredImage {
-            node {
-              sourceUrl(size: POST_THUMBNAIL)
-            }
-          }
-          readingTime
-          date
-          difficulties(first: 1) {
-            edges {
-              node {
-                name
-              }
-            }
-          }
-          translation(language: EN) {
-            uri
-          }
+          ...postData
         }
       }
     }
@@ -161,32 +145,7 @@ export const getStaticProps:GetStaticProps = async ({locale}) => {
     where: {orderby: {order: DESC, field: DATE}, language: $language}
   ) {
     nodes {
-      id
-      title
-      uri
-      featuredImage {
-        node {
-          altText
-          sourceUrl(size: POST_THUMBNAIL)
-        }
-      }
-      categories {
-        nodes {
-          name
-        }
-      }
-      date
-      readingTime
-      difficulties(first: 1) {
-        edges {
-          node {
-            name
-          }
-        }
-      }
-      translation(language: EN) {
-            uri
-        }
+      ...postData
     }
   }
   featuredPosts(
