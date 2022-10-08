@@ -8,38 +8,40 @@ const GlossarySection = () => {
     <div className="my-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
             <div className="p-6">
-                <h3 className="text-amber-600 font-bold text-6xl">350</h3>
-                <p className="text-sm font-bold my-5 md:mb-10">That's how many terms we have in our glossary. Can you name them all?</p>
-                <div className="md:w-3/4 flex justify-center text-sm">
-                    <TextInput type="search"  placeholder="search terms here.."  icon={MagnifyingGlassIcon}/>                    
+                <h3 className="text-6xl font-bold text-amber-600">350</h3>
+                <p className="my-5 text-sm font-bold md:mb-10">That's how many terms we have in our glossary. Can you name them all?</p>
+                <div className="flex justify-center text-sm md:w-3/4">
+                    <form method="GET" action="/glossary" >
+                        <TextInput type="search" name="query"  placeholder="search terms here.."  icon={MagnifyingGlassIcon}/>                    
+                    </form>
                 </div>
             </div>
 
 
-            <div className="bg-white rounded-xl shadow-lg p-4">
-                <span className="text-xs p-1 px-2 bg-black text-white rounded-md">Glossary</span>
+            <div className="p-4 bg-white shadow-lg rounded-xl">
+                <span className="p-1 px-2 text-xs text-white bg-black rounded-md">Glossary</span>
                 <br />
                 <br />
-                <span className="text-2xl mb-3 py-3 font-bold border-b-2 border-amber-600">Meme Coins</span>
-                <div className="my-10 mb-12 font-bold text-sm">
+                <span className="py-3 mb-3 text-2xl font-bold border-b-2 border-amber-600">Meme Coins</span>
+                <div className="my-10 mb-12 text-sm font-bold">
                     <p>No Picture Blockchain & Crypto News</p>
                     <p>No Picture Blockchain & Crypto News</p>
                     <p>No Picture Blockchain & Crypto News</p>
                 </div>
-                <button className="bg-gray-200 px-2 p-1 rounded-md">Full Definition {'>>'}</button>    
+                <button className="p-1 px-2 bg-gray-200 rounded-md">Full Definition {'>>'}</button>    
             </div>
 
-            <div className="bg-white rounded-xl shadow-lg p-4">
-                <span className="text-xs p-1 px-2 bg-black text-white rounded-md">Glossary</span>
+            <div className="p-4 bg-white shadow-lg rounded-xl">
+                <span className="p-1 px-2 text-xs text-white bg-black rounded-md">Glossary</span>
                 <br />
                 <br />
-                <span className="text-2xl mb-3 py-3 font-bold border-b-2 border-amber-600">Meme Coins</span>
-                <div className="my-10 mb-12 font-bold text-sm">
+                <span className="py-3 mb-3 text-2xl font-bold border-b-2 border-amber-600">Meme Coins</span>
+                <div className="my-10 mb-12 text-sm font-bold">
                     <p>No Picture Blockchain & Crypto News</p>
                     <p>No Picture Blockchain & Crypto News</p>
                     <p>No Picture Blockchain & Crypto News</p>
                 </div>
-                <button className="bg-gray-200 px-2 p-1 rounded-md">Full Definition {'>>'}</button>    
+                <button className="p-1 px-2 bg-gray-200 rounded-md">Full Definition {'>>'}</button>    
             </div>
 
         </div>

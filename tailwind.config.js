@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors:{
          footer: '#15192a',
+         glossary: '#F8F8F8',
       },
       fontFamily:{
         Dm: ['DM Serif Display', 'serif'],
