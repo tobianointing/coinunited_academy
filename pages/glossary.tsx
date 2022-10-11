@@ -94,7 +94,7 @@ const Glossary = (props:GProps) => {
 
                     <div className="flex items-center flex-grow space-x-2 text-gray-400 justify-evenly">
                             {glossaryKey &&  glossaryKey?.map( gk =>
-                                <Scroll activeClass="text-black font-bold" to={gk.node.name} spy={true} smooth={true} offset={50} duration={500} className="hover:text-black cursor-pointer active:text-black hover:font-bold transition-all duration-200 ease-in" key={gk.cursor}>{gk.node.name}</Scroll>
+                                <Scroll activeClass="text-black font-bold" to={gk.node.name} spy={true} smooth={true} offset={0} duration={500} className="hover:text-black cursor-pointer active:text-black hover:font-bold transition-all duration-200 ease-in" key={gk.cursor}>{gk.node.name}</Scroll>
                             )
                         }
                           
