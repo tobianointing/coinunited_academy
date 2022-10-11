@@ -109,7 +109,7 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
           featuredImage {
             node {
               altText
-              sourceUrl(size: POST_THUMBNAIL)
+              sourceUrl(size: LARGE)
             }
           }
           difficulties {
@@ -140,7 +140,7 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
           featuredImage {
             node {
               altText
-              sourceUrl(size: POST_THUMBNAIL)
+              sourceUrl(size: LARGE)
             }
           }
           difficulties {
@@ -170,7 +170,7 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
             readingTime
             featuredImage {
               node {
-                sourceUrl(size: POST_THUMBNAIL)
+                sourceUrl(size: LARGE)
               }
             }
             difficulties(first: 1) {

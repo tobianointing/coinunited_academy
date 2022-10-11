@@ -10,11 +10,11 @@ const Header = () => {
   const router:NextRouter = useRouter();
   const { t } = useTranslation('common');
   const {locale:activeLocale, locales, asPath} = router;
-  const availableLocales = locales?.filter((locale) => locale !== activeLocale);
+  const availableLocales = locales?.filter((locale:string) => locale !== activeLocale);
 
 
   return (
-    <div className='sticky z-10 top-0'>
+    <div className='z-10'>
     <div className='flex items-center justify-between px-4 p-3'>
         <div className='flex items-center'>
           <Link href='/'><a> 

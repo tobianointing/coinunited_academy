@@ -8,14 +8,14 @@ import useTranslation from 'next-translate/useTranslation'
 import { useState } from "react"
 
 
-type Callback = ()=>void
+type Callback = (difficulty?:string)=>void
 
 
-export const Tags = ({name,callback}:{name:string, callback?:Callback}) =>{
+export const Tags = ({name,callback}:{name?:string, callback?:Callback}) =>{
     const [clicked,setClicked] = useState<boolean>(false)
     const handleClick = () =>{
         setClicked(!clicked);
-        if(callback) callback()
+        if(callback) callback(name)
     }
 
     return (
@@ -33,7 +33,7 @@ export const Difficulty =( {difficulty, callback}:{difficulty?:string, callback?
 
     const handleClick = ()=>{
         setClicked(!clicked);
-        if(callback) callback()
+        if(callback) callback(difficulty)
     }
 
     switch (d) {

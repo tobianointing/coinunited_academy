@@ -109,3 +109,51 @@ export interface ITagStore{
   tags: Tag[]
   setTags: (state:Tag[]) => void
 }
+
+
+export interface Glossary {
+  (props: {
+      title: string,
+      description: string,
+  }): JSX.Element
+} 
+
+export type GlossaryItem = {
+  title: string,
+  content: string,
+  id: string
+}
+
+type GlossaryNode = {
+  nodes: Array<GlossaryItem>
+}
+
+export interface GlossaryKey{
+  node: {
+      name: string,
+      id: string,
+      glossaries: GlossaryNode,
+  },
+  cursor: string,   
+}
+
+export interface IGlossary{
+  glossaryKey: Array<GlossaryKey>;
+  setGlossaryKey: (state:GlossaryKey[]) => void
+}
+
+
+export interface IFilters {
+  difficulties:Array<string>;
+  tags:Array<string>;
+}
+
+
+export type FilterComponenet = (
+  props: {
+      tags:Tag[],
+      difficulties:IDifficulty[],
+      query?:string,
+      dataSetter? : ({tags,difficulties}:IFilters, data:any)=> void    
+  }
+) => JSX.Element

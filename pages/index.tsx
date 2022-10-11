@@ -193,13 +193,12 @@ export const getStaticProps:GetStaticProps = async ({locale}) => {
     }
   });
 
-  
   try{
-    const categories = await data.categories.nodes;
-    const posts = await data.posts.nodes;
+    const categories = await data?.categories?.nodes;
+    const posts = await data?.posts?.nodes;
     const featuredPost = await data?.featuredPosts?.nodes[0];
-    const difficulties = await data.difficulties.nodes; 
-    const tags = await data.tags.nodes;
+    const difficulties = await data?.difficulties?.nodes; 
+    const tags = await data?.tags?.nodes;
   
   return  {
     props: {

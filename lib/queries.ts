@@ -1,22 +1,13 @@
 import { gql } from "@apollo/client";
 import { POST_DATA_FRAGMENT } from "./fragments";
 
-export const FILTER_POSTS_BY_SLUG_AND_DIFFICULTY = gql `
-${POST_DATA_FRAGMENT}
-query searchPost($search: String!, $tags: [String!], $difficulties: [String!], $language:LanguageCodeFilterEnum = ALL) {
+// TODO: change all size to 12
 
+export const FILTER_POSTS_BY_TAG_AND_DIFF = gql `
+${POST_DATA_FRAGMENT}
+query searchPost($search: String!, $tags: [String!], $difficulties: [String!], $language:LanguageCodeFilterEnum = ALL, $page:Int! = 0) {
   posts(
-    where: {
-        search: $search, 
-        taxQuery: {
-            taxArray: [
-                {terms: $tags, taxonomy: TAG, operator: IN, field: SLUG}, 
-                {terms: $difficulties, taxonomy: DIFFICULTY, operator: IN, field: NAME}
-                ], 
-            relation: AND}, 
-        offsetPagination: {offset: 0, size: 10},
-        language: $language
-        }
+    where: {search: $search, taxQuery: {taxArray: [{terms: $tags, taxonomy: TAG, operator: IN, field: SLUG}, {terms: ["beginner"], taxonomy: DIFFICULTY, operator: AND, field: NAME}], relation: OR}, offsetPagination: {size: 10, offset: $page}, language: $language}
     ) {
       
     nodes {
@@ -31,6 +22,49 @@ query searchPost($search: String!, $tags: [String!], $difficulties: [String!], $
   }
 }
 `
+
+
+export const FILTER_POSTS_BY_TAG = gql `
+${POST_DATA_FRAGMENT}
+query searchPost($search: String!, $tags: [String!], $language:LanguageCodeFilterEnum = ALL, $page:Int! = 0) {
+  posts(
+    where: {
+      search: $search, 
+      taxQuery: {
+        taxArray: [
+          {terms: $tags, taxonomy: TAG, operator: IN, field: NAME}
+        ], 
+        relation: AND}, 
+        offsetPagination: {size: 3, offset: $page}, 
+        language: $language
+      }
+    ) {
+      
+    nodes {
+        ...postData
+      }
+
+    pageInfo {
+      offsetPagination {
+        total
+      }
+    }
+  }
+}
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const GET_POSTS_BY_QUERY = gql `

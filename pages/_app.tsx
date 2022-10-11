@@ -10,7 +10,7 @@ import Footer from '../components/Footer'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <div className='font-DmSans block overflow-hidden'>
+      <div className='font-DmSans block'>
         <Header />
         <Component {...pageProps} />
         <div className='bg-footer'>

@@ -7,7 +7,7 @@ export const POST_DATA_FRAGMENT = gql`
     uri
     featuredImage {
     node {
-        sourceUrl(size: POST_THUMBNAIL)
+        sourceUrl(size: MEDIUM)
     }
     }
     readingTime
@@ -22,6 +22,11 @@ export const POST_DATA_FRAGMENT = gql`
     translation(language: EN) {
     uri
     }
+    categories {
+        nodes {
+        id
+        name
+        }
+    }
 }
-
 `

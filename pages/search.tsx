@@ -4,14 +4,14 @@ import OptimizedImage from "../components/OptimizedImage"
 import { Article, formatDate, formatReadingTime, Difficulty as InlineDifficulty } from "../components/LatestArticles"
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { IDifficulty, Post, Tag } from "../custom_interface"
+import { IDifficulty, IFilters, Post, Tag } from "../custom_interface"
 import { useState } from "react"
-import { Tags } from "../components/MoreArticles"
-import useTranslation from "next-translate/useTranslation"
-import {Difficulty} from "../components/MoreArticles"
 import { GetServerSideProps } from "next"
-import {FILTER_POSTS_BY_SLUG_AND_DIFFICULTY, GET_POSTS_BY_QUERY, GET_POSTS_BY_QUERY_2} from "../lib/queries"
+import {GET_POSTS_BY_QUERY, GET_POSTS_BY_QUERY_2} from "../lib/queries"
 import { client } from "../lib/apollo"
+import { Filters } from "../components/Filters"
+
+
 
 type Mode = "grid" | "list"
 
@@ -19,28 +19,6 @@ type Mode = "grid" | "list"
 const range = (start=1, stop:number, step = 1) => Array(Math.ceil((stop - start) / step)).fill(start).map((x, y) => x + y * step)
 
 
-const Filters = ({tags, difficulties}:{tags:Tag[], difficulties:IDifficulty[]})=>{
-    const { t } = useTranslation('common')
-    return <div className="grid grid-cols-1 gap-6 my-7 md:grid-cols-2 md:gap-16">
-    <div>
-        <p className="font-semibold">{t("Popular tags")}</p>   
-        <div className="grid grid-cols-4 gap-3 my-4">
-            { tags.length > 0 && tags.map((tag) => <Tags key={tag.id} name={tag.name} />)}
-        </div>
-    </div>
-
-    <div>
-        <p className="font-semibold">{t("Difficulty")}</p>
-
-        <div className="grid grid-cols-3 gap-3 my-4 mb-7">
-            {difficulties.length > 0 && difficulties.map((difficulty) => (
-                    <Difficulty key={difficulty.id} difficulty={difficulty.name}/>
-                ))
-            }
-        </div>
-    </div>
-</div>
-}
 
 const ListArticle = ({title, featuredImage, difficulties, date, readingTime, uri }:Post) => {
     return (
@@ -91,12 +69,13 @@ const fetchPost_default = async (query:string, page:number, language:string) => 
 
 
 
-const Search= ({posts:serverArticles, resultTotal, query, difficulties, tags}:
+const Search= ({posts:serverArticles, resultTotal:total, query, difficulties, tags}:
     {posts:Post[], resultTotal:number, query:string, difficulties:IDifficulty[], tags:Tag[] }) => {
     const [mode, setMode] = useState<Mode>('grid')
     const [sort, setSort] = useState<boolean>(false)    
     const [articles, setArticles] = useState<Post[]>(serverArticles)
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [resultTotal, setResultTotal] = useState<number>(total)
     const pagination = ():Array<number> => {
         try{
             return range(1, (Math.ceil(resultTotal/3))+1)
@@ -105,6 +84,15 @@ const Search= ({posts:serverArticles, resultTotal, query, difficulties, tags}:
             return [1,2]
         }
     }
+
+    const filterSetter = (filters:IFilters, data?:{posts:Post[], resultTotal:number}) => {
+        if(data){
+            setArticles(data.posts)
+            setCurrentPage(1)
+            setResultTotal(data.resultTotal)
+        }
+    }
+
 
     const fetchPaginatedDataDefault = (page:number) =>{
         fetchPost_default(query, page, 'EN').then((data)=>{
@@ -129,7 +117,7 @@ const Search= ({posts:serverArticles, resultTotal, query, difficulties, tags}:
                 <h1 className="text-4xl font-bold">Topic at Academy</h1>
                 
                 {
-                  sort && <Filters tags={tags} difficulties={difficulties} />
+                  sort && <Filters tags={tags} difficulties={difficulties} query={query} dataSetter={filterSetter} />
                 }
             </Container>
             <div className="bg-gray-200">

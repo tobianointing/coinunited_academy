@@ -1,5 +1,11 @@
 import create from 'zustand'
-import {ICatStore, IPostStore, IFeaturedStore, IDifficultyStore, ITagStore} from '../custom_interface'
+import {ICatStore, 
+        IPostStore, 
+        IFeaturedStore, 
+        IDifficultyStore, 
+        ITagStore, IGlossary} from '../custom_interface'
+
+
 
 export const usePosts =create<IPostStore>(
     set => ({
@@ -38,5 +44,12 @@ export const useTags = create<ITagStore>(
     set => ({
         tags: [],
         setTags: (tags) => set({tags})
+    })
+)
+
+export const useGlossaryKey = create<IGlossary>(
+    set => ({
+        glossaryKey : [], 
+        setGlossaryKey: (glossaryKey) => set({glossaryKey})
     })
 )
