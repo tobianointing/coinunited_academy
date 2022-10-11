@@ -23,8 +23,9 @@ const GlossaryItem:Glossary = ({title, description}) => {
 
 const GlossaryContainer = ({gKey, posts}:{gKey:string, posts?:Array<GlossaryItem>})=>{
     return (
+        <Target name={gKey}>
         <Container>
-            <Target name={gKey} className="grid grid-cols-5 border-b-2 py-7 snap-always snap-center">
+            <div className="grid grid-cols-5 border-b-2 py-7 snap-always snap-center">
                 <div className="col-span-1">
                     <h2 className="text-6xl font-bold text-gray-400">{gKey}</h2>
                 </div>
@@ -36,10 +37,9 @@ const GlossaryContainer = ({gKey, posts}:{gKey:string, posts?:Array<GlossaryItem
                           )
                     }
                 </div>
-            </Target>
-            
-        
+            </div>
         </Container>
+        </Target>
     )
 }
 
