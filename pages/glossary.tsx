@@ -134,6 +134,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
         props:{
             glossaries_key
-        }
+        },
+        revalidate: 300 
     }
 }
