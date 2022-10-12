@@ -11,7 +11,7 @@ import { formatDate, formatReadingTime } from "../../components/LatestArticles";
 import Link from "next/link";
 import {getReadingTime} from '../../components/Top'
 import parse from 'html-react-parser';
-import { Head } from "next/document";
+import Head  from "next/head";
 
 
 const truncateWord = (str: string, num: number) => {
