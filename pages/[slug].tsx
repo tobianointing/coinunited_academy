@@ -9,6 +9,8 @@ import { client } from "../lib/apollo";
 import { gql } from "@apollo/client";
 import { formatDate, formatReadingTime } from "../components/LatestArticles";
 import Link from "next/link";
+import Head from 'next/head'
+import parse from 'html-react-parser';
 
 
 export const truncateWord = (str: string, num: number) => {
@@ -19,15 +21,16 @@ export const truncateWord = (str: string, num: number) => {
     return str.slice(0, num).trim() + "...";
 }
 
-const ArticleDetail = (props:{article:Post, posts:Post[]}) => {
-    const {article, posts} = props;
-    
-    const filteredPosts = posts?.filter(post => post.id !== article.id).slice(0,3);
-   
-
-
+const ArticleDetail = (props:{article:Post, posts:Post[], fullHead:string}) => {
+    const {article, posts, fullHead} = props;
+    const filteredPosts = posts?.filter(post => post.id !== article.id).slice(0,3);  
     return (
         <main>
+          <Head>
+            {(fullHead) ? parse(fullHead): ""}
+          </Head>
+
+
         <Container_2>
             <div className="flex items-center text-xs font-bold space-x-3">
                 {article?.tags && article?.tags?.nodes?.map((tag) =>
@@ -100,6 +103,9 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
     const GET_POST_BY_SLUG = gql`
     query PostBySlug($slug: ID! , $language: LanguageCodeEnum!, $lang: LanguageCodeFilterEnum!) {
         post(id: $slug, idType: URI)  {
+          seo {
+            fullHead
+            }
           author {
             node {
               firstName
@@ -207,6 +213,9 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
         
         
         const posts = await response.data.posts.nodes
+        const fullHead = await response.data?.post?.seo?.fullHead
+        
+
         if (!article) {
             throw new Error('No article found')
         }
@@ -214,7 +223,8 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
         return {
             props: {
                 article,
-                posts
+                posts,
+                fullHead
             },
             revalidate: 150
         }

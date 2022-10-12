@@ -86,6 +86,21 @@ export interface IData {
     featuredPost: Post;
     difficulties: IDifficulty[];
     tags: Tag[];
+    seo: {
+      contentTypes: {
+        page: {
+          schema: {
+            raw: string
+          }
+        }
+      }
+    };
+
+    page : {
+      title: string,
+      description: string,
+      uri: string
+    }
   }
   
 

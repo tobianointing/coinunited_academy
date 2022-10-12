@@ -10,6 +10,8 @@ import { gql } from "@apollo/client";
 import { formatDate, formatReadingTime } from "../../components/LatestArticles";
 import Link from "next/link";
 import {getReadingTime} from '../../components/Top'
+import parse from 'html-react-parser';
+import { Head } from "next/document";
 
 
 const truncateWord = (str: string, num: number) => {
@@ -20,8 +22,8 @@ const truncateWord = (str: string, num: number) => {
     return str.slice(0, num).trim() + "...";
 }
 
-const ArticleDetail = (props:{article:Post, posts:Post[]}) => {
-    const {article:initArticle, posts} = props;
+const ArticleDetail = (props:{article:Post, posts:Post[], fullHead:string}) => {
+    const {article:initArticle, posts, fullHead} = props;
     
     // add reading time to article
     const article = {...initArticle, readingTime: getReadingTime(initArticle?.content)};
@@ -29,6 +31,10 @@ const ArticleDetail = (props:{article:Post, posts:Post[]}) => {
 
     return (
         <main>
+          <Head>
+            {(fullHead) ? parse(fullHead): ""}
+          </Head>
+
         <Container_2>
             <div className="flex items-center text-xs font-bold space-x-3">
                 {article?.tags && article?.tags?.nodes?.map((tag) =>
@@ -108,6 +114,12 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
         lastName
       }
     }
+
+    seo {
+      fullHead
+    }
+
+
     title
     date
     content
@@ -196,7 +208,7 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
         try{
         const article_found = await response.data.featuredPost.translation 
         const article = article_found ? article_found : await response.data.featuredPost
-        
+        const fullHead = await response.data.featuredPost.seo.fullHead  
         
         const posts = await response.data.posts.nodes
         if (!article) {
@@ -206,7 +218,8 @@ export const getStaticProps:GetStaticProps = async ({params, locale}) => {
         return {
             props: {
                 article,
-                posts
+                posts,
+                fullHead
             },
             revalidate: 150
         }

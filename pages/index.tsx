@@ -10,7 +10,7 @@ import advert_one from '../public/img/advert_one.png'
 import GlossarySection from '../components/GlossarySection'
 import {client} from '../lib/apollo'
 import { DocumentNode, gql } from '@apollo/client'
-import { GlossaryItem, IData } from '../custom_interface'
+import { IData } from '../custom_interface'
 import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags, useGlossary} from '../lib/hooks'
 import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
@@ -18,10 +18,11 @@ import { GetStaticProps } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 import {POST_DATA_FRAGMENT} from '../lib/fragments'
 import { GET_GLOSSARIES_KEY, GET_GLOSSARIES_BY_KEY } from '../lib/gql_query/glossary'
+import { GET_SEO_DATA } from '../lib/gql_query/seo'
 
 
 const Home = (props:IData) => {
-  const {categories, posts, featuredPost, difficulties, tags} = props
+  const {categories, posts, featuredPost, difficulties, tags, seo, page} = props
   const setPosts = usePosts(state => state.setPosts)
   const setCategories = useCategories(state => state.setCategories)  
   const setFeaturedPost = useFeaturedPost(state => state.setFeaturedPost)
@@ -70,8 +71,27 @@ const Home = (props:IData) => {
   return (
     <main className='mt-2'>
       <Head>
-        <title>CoinUnited IO</title>
+
+        <title>{page?.title}</title>
         <link rel="icon" href="/img/favicon.ico" />
+        <meta name="description" content={page?.description} />
+        <meta property="og:title" content={page?.title} />
+        <meta property="og:description" content={page?.description} />
+        <script type="application/ld+json"  dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON.parse(seo?.contentTypes?.page?.schema?.raw)) }} />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="CoinUnited.io" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Academy | CoinUnited.io" />
+        <meta property="og:description" content={page?.description} />
+        <meta property="og:url" content={page?.uri + '/en/'} />
+        <meta property="og:image" content="/img/cu_academy_logo.png" />
+        <meta property="og:image:secure_url" content="/img/cu_academy_logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@realcoinunited" />
+        <meta name="twitter:title" content="Academy | CoinUnited.io" />
+        <meta name="twitter:description" content={page?.description} />
+        <meta name="twitter:creator" content="@realcoinunited" />
+        <meta name="twitter:image" content="/img/cu_academy_logo.png" />
       </Head>
       <div>
         <div className='bg-white'>
@@ -225,6 +245,14 @@ export const getStaticProps:GetStaticProps = async ({locale}) => {
       }
     });
   
+    const seo_data = await client.query({
+      query: GET_SEO_DATA,
+    })
+
+    const seo_object = seo_data?.data?.seo
+    
+    const page_object = seo_data?.data?.generalSettings
+
     const categories = await data?.categories?.nodes;
     const posts = await data?.posts?.nodes;
     const featuredPost = await data?.featuredPosts?.nodes[0];
@@ -237,7 +265,9 @@ export const getStaticProps:GetStaticProps = async ({locale}) => {
       posts: posts ? posts : [],
       featuredPost : featuredPost ? featuredPost : {},
       difficulties : difficulties ? difficulties : [],
-      tags: tags ? tags : []
+      tags: tags ? tags : [],
+      seo: seo_object ? seo_object : {},
+      page: page_object ? page_object : {}
     },
     revalidate: 150
   }
