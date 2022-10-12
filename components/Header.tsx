@@ -2,19 +2,19 @@ import {Bars3Icon ,ArrowLongRightIcon} from '@heroicons/react/24/solid'
 import { Dropdown } from "flowbite-react";
 import { ContainImage } from './OptimizedImage';
 import Link from 'next/link';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation'
 
 
 const Header = () => {
-  const router:NextRouter = useRouter();
+  const router = useRouter();
   const { t } = useTranslation('common');
   const {locale:activeLocale, locales, asPath} = router;
   const availableLocales = locales?.filter((locale:string) => locale !== activeLocale);
 
 
   return (
-    <div className='z-10'>
+    <div className='z-10 overflow-hidden'>
     <div className='flex items-center justify-between px-4 p-3'>
         <div className='flex items-center'>
           <Link href='/'><a> 
@@ -71,7 +71,7 @@ const Header = () => {
 
               <Dropdown label={t("language")} inline={true}>
                 {
-                  availableLocales?.map(locale => {
+                  availableLocales?.map((locale:string) => {
                     let local_name;
                     switch (locale) {
                       case 'en':

@@ -74,7 +74,7 @@ export type category = {
 }
 
 
-interface IDifficulty {
+export interface IDifficulty {
     id: string;
     name: string;
 }
@@ -114,14 +114,16 @@ export interface ITagStore{
 export interface Glossary {
   (props: {
       title: string,
-      description: string,
+      description?: string,
+      uri: string
   }): JSX.Element
 } 
 
 export type GlossaryItem = {
   title: string,
-  content: string,
-  id: string
+  content?: string,
+  id: string,
+  uri: string
 }
 
 type GlossaryNode = {
@@ -157,3 +159,10 @@ export type FilterComponenet = (
       dataSetter? : ({tags,difficulties}:IFilters, data:any)=> void    
   }
 ) => JSX.Element
+
+
+
+export interface IGlossary2{
+  glossaries: Array<GlossaryItem>;
+  setGlossaries: (state:GlossaryItem[]) => void
+}

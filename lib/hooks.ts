@@ -3,7 +3,7 @@ import {ICatStore,
         IPostStore, 
         IFeaturedStore, 
         IDifficultyStore, 
-        ITagStore, IGlossary} from '../custom_interface'
+        ITagStore, IGlossary, IGlossary2} from '../custom_interface'
 
 
 
@@ -51,5 +51,12 @@ export const useGlossaryKey = create<IGlossary>(
     set => ({
         glossaryKey : [], 
         setGlossaryKey: (glossaryKey) => set({glossaryKey})
+    })
+)
+
+export const useGlossary = create<IGlossary2>(
+    set => ({
+        glossaries : [],
+        setGlossaries: (glossaries) => set({glossaries})
     })
 )

@@ -4,7 +4,7 @@ import { usePosts} from "../lib/hooks"
 import OptimizedImage from "./OptimizedImage"
 import { titleCase } from "./TopMain"
 import Link from "next/link";
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation'
 
 
@@ -98,7 +98,7 @@ export const Article = ({title, uri, featuredImage, categories, date, readingTim
 const LatestArticles = ({props_post}:{props_post?:Post[]}) => {
   let first_six_posts;
   const posts:Post[] = usePosts(state => state.posts)
-  const router:NextRouter = useRouter();
+  const router = useRouter();
   props_post? first_six_posts = props_post : first_six_posts = posts?.slice(0, 6);
   const { t } = useTranslation('common')
 

@@ -11,7 +11,7 @@ import { formatDate, formatReadingTime } from "../components/LatestArticles";
 import Link from "next/link";
 
 
-const truncateWord = (str: string, num: number) => {
+export const truncateWord = (str: string, num: number) => {
     if (!str) return ''    
     if (str.length <= num) {
         return str;

@@ -10,13 +10,14 @@ import advert_one from '../public/img/advert_one.png'
 import GlossarySection from '../components/GlossarySection'
 import {client} from '../lib/apollo'
 import { DocumentNode, gql } from '@apollo/client'
-import { IData } from '../custom_interface'
-import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags} from '../lib/hooks'
+import { GlossaryItem, IData } from '../custom_interface'
+import {usePosts, useCategories, useFeaturedPost, useDifficuties, useTags, useGlossary} from '../lib/hooks'
 import { useEffect } from 'react'
 import {ContainImage} from '../components/OptimizedImage'
 import { GetStaticProps } from 'next'
 import useTranslation from 'next-translate/useTranslation'
 import {POST_DATA_FRAGMENT} from '../lib/fragments'
+import { GET_GLOSSARIES_KEY, GET_GLOSSARIES_BY_KEY } from '../lib/gql_query/glossary'
 
 
 const Home = (props:IData) => {
@@ -26,6 +27,7 @@ const Home = (props:IData) => {
   const setFeaturedPost = useFeaturedPost(state => state.setFeaturedPost)
   const setDifficulties = useDifficuties(state => state.setDifficulties)  
   const setTags = useTags(state => state.setTags)
+  const setGlossaries = useGlossary(state => state.setGlossaries)
   
   useEffect(() => {
     setPosts(posts);
@@ -34,6 +36,34 @@ const Home = (props:IData) => {
     setDifficulties(difficulties);
     setTags(tags);
   }, [posts, categories, featuredPost,difficulties,tags])
+
+
+
+  useEffect(() => {
+    (async ()=>{
+
+        const res = await client.query({query: GET_GLOSSARIES_KEY})
+        const keys = await res?.data?.keyAlphabets?.nodes
+        const randomKeys = await keys?.sort(() => Math.random() - 0.5).slice(0, 2)
+        const randomKeysName = await randomKeys?.map((key:{id:string}) => key?.id)            
+        
+        const items = randomKeysName?.map(async(keyName:string) => {
+              const res = await client.query({
+                          query: GET_GLOSSARIES_BY_KEY,
+                          variables: {
+                              id: keyName
+                          }
+                      })
+              const item =  await res?.data?.keyAlphabet?.glossaries?.nodes[0]
+              return item
+            }
+        );
+        const glossaries = await Promise.all(items)
+        setGlossaries(glossaries)
+
+    })();
+  },[])
+
 
   const { t } = useTranslation('common')
 
@@ -186,14 +216,15 @@ export const getStaticProps:GetStaticProps = async ({locale}) => {
   }
 }
   `
-  const {data} = await client.query({
-    query: GET_ALL_POSTS,
-    variables: {
-      language: locale?.toLocaleUpperCase()
-    }
-  });
-
+ 
   try{
+    const {data} = await client.query({
+      query: GET_ALL_POSTS,
+      variables: {
+        language: locale?.toLocaleUpperCase()
+      }
+    });
+  
     const categories = await data?.categories?.nodes;
     const posts = await data?.posts?.nodes;
     const featuredPost = await data?.featuredPosts?.nodes[0];
