@@ -34,9 +34,9 @@ const Top = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 md:gap-14 my-6">
         <div className="md:mt-24">
             <p className="font-semibold opacity-80">{t("DISCOVER EVERYTHING ABOUT")}</p>
-            <h2 className="text-6xl md:text-5xl my-8 font-bold break-normal font-Dm">
+            <h1 className="text-6xl md:text-5xl my-8 font-bold break-normal font-Dm">
                 {t('Blockchain & Crypto')}
-            </h2>
+            </h1>
             <p className="mt-10 text-sm opacity-90 text-gray-700">
                 {t("crypto-guide")}
             </p>
