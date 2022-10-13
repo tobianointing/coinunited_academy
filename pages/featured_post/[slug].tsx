@@ -6,13 +6,12 @@ import LatestArticles, { Difficulty } from "../../components/LatestArticles";
 import {  Post } from "../../custom_interface";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { client } from "../../lib/apollo";
-import { gql } from "@apollo/client";
 import { formatDate, formatReadingTime } from "../../components/LatestArticles";
 import Link from "next/link";
 import {getReadingTime} from '../../components/Top'
 import parse from 'html-react-parser';
 import Head  from "next/head";
-
+import { GET_POST_BY_SLUG } from "../../lib/gql_query/featured";
 
 const truncateWord = (str: string, num: number) => {
     if (!str) return ''    
@@ -28,10 +27,15 @@ const ArticleDetail = (props:{article:Post, posts:Post[], fullHead:string}) => {
     // add reading time to article
     const article = {...initArticle, readingTime: getReadingTime(initArticle?.content)};
     const filteredPosts = posts?.filter(post => post.id !== article.id).slice(0,3);
-
+  
     return (
         <main>
           <Head>
+            <title>{article?.title}</title>
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+            <link rel="manifest" href="/site.webmanifest" />
             {(fullHead) ? parse(fullHead): ""}
           </Head>
 
@@ -103,141 +107,49 @@ export default ArticleDetail;
 
 export const getStaticProps:GetStaticProps = async ({params, locale}) => {
     const slug = params?.slug
+    const response = await client.query({
+        query: GET_POST_BY_SLUG,
+        variables: {
+            id: slug,
+            language: locale?.toUpperCase(),
+            lang: locale?.toUpperCase()
+        }
+    });
     
-    const GET_POST_BY_SLUG = gql`
-   query PostBySlug($id: ID!, $language: LanguageCodeEnum!, 
-  $lang: LanguageCodeFilterEnum!) {
-  featuredPost(id: $id, idType: SLUG) {
-    author {
-      node {
-        firstName
-        lastName
-      }
-    }
 
-    seo {
-      fullHead
-    }
-
-
-    title
-    date
-    content
-    difficulties(first: 1) {
-      edges {
-        node {
-          name
-        }
-      }
-    }
-    featuredImage {
-      node {
-        altText
-        sourceUrl(size: POST_THUMBNAIL)
-      }
-    }
-    id
-    uri
-    translation(language: $language){
-       author {
-      node {
-        firstName
-        lastName
-      }
-    }
-    title
-    date
-    content
-    difficulties(first: 1) {
-      edges {
-        node {
-          name
-        }
-      }
-    }
-    featuredImage {
-      node {
-        altText
-        sourceUrl(size: POST_THUMBNAIL)
-      }
-    }
-    id
-    uri
-    } 
-  }
-  
-  posts(first: 4, where : {language : $lang}) {
-          nodes {
-            title
-            uri
-            id
-            readingTime
-            featuredImage {
-              node {
-                sourceUrl(size: POST_THUMBNAIL)
-              }
-            }
-            difficulties(first: 1) {
-                edges {
-                  node {
-                    name
-                  }
-                }
-              }
-            date
-            categories {
-              nodes {
-                id
-                name
-              }
-            }
-          }
-        }  
-  }
-`
-
-        const response = await client.query({
-            query: GET_POST_BY_SLUG,
-            variables: {
-                id: slug,
-                language: locale?.toUpperCase(),
-                lang: locale?.toUpperCase()
-            }
-        })
-
-        try{
-        const article_found = await response.data.featuredPost.translation 
-        const article = article_found ? article_found : await response.data.featuredPost
-        const fullHead = await response.data.featuredPost.seo.fullHead  
-        
-        const posts = await response.data.posts.nodes
-        if (!article) {
-            throw new Error('No article found')
-        }
-        
-        return {
-            props: {
-                article,
-                posts,
-                fullHead
-            },
-            revalidate: 150
-        }
+    try{
+      const article_found = response.data?.featuredPost?.translation 
+      const article = article_found ? article_found : response?.data?.featuredPost
+      const fullHead = response?.data?.featuredPost?.seo?.fullHead  
       
+      const posts = response?.data?.posts?.nodes
+      if (!article) {
+          throw new Error('No article found')
       }
-        catch{
-            return {
-                notFound: true
-            }
-        }
+      
+      return {
+          props: {
+              article: article ? article : {},
+              posts: posts ? posts : [],
+              fullHead: fullHead ? fullHead : ''
+          },
+          revalidate: 150
+      }
+    
     }
+      catch{
+          return {
+              notFound: true
+          }
+      }
+  }
 
 
 
-    export const getStaticPaths:GetStaticPaths = async () => {
-        return {
-            paths: [],
-            fallback: true
-        }
-    }
+  export const getStaticPaths:GetStaticPaths = async () => {
+      return {
+          paths: [],
+          fallback: true
+      }
+  }
 

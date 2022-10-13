@@ -2,6 +2,9 @@ import { gql } from "@apollo/client";
 
 export const GET_GLOSSARIES = gql`
     query getGlossaries{
+    generalSettings {
+        url
+    }
     keyAlphabets (first: 100){
         edges {
         node {
@@ -23,24 +26,27 @@ export const GET_GLOSSARIES = gql`
 `
 
 export const GET_GLOSSARY = gql`
-    query getGlossy($id: ID = "") {
-        glossary(id: $id, idType: URI) {
-            id
-            title
-            content
-            keyAlphabets(first: 1) {
-            nodes {
-                uri
-               }
-            }
-            difficulties(first: 1) {
-            nodes {
-                name
-                id
-            }
-            }
-        }
+   query getGlossy($id: ID = "") {
+  glossary(id: $id, idType: URI) {
+    id
+    title
+    content
+    keyAlphabets(first: 1) {
+      nodes {
+        uri
+      }
     }
+    difficulties(first: 1) {
+      nodes {
+        name
+        id
+      }
+    }
+    seo {
+      fullHead
+    }
+  }
+}
 `
 
 export const GET_SUGGESTIONS = gql`

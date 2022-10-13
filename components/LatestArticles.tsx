@@ -116,17 +116,19 @@ const LatestArticles = ({props_post}:{props_post?:Post[]}) => {
         </div>
 
         <div className="grid grid-cols-1 my-6 space-y-6 md:grid-cols-3 md:space-y-0 md:gap-8 ">
-        {first_six_posts?.length > 0 && first_six_posts.map((post) => 
-            <Article 
+        {first_six_posts?.length > 0 && first_six_posts.map((post) => {
+            
+            const uri:string | undefined = post.translation?.uri ? post.translation.uri : post.uri 
+            return <Article 
                 key={post.id}
                 title={post.title}
-                uri={post.translation?.uri}
+                uri={uri}
                 featuredImage={post.featuredImage}
                 categories={post.categories}
                 date={post.date}
                 readingTime = {post.readingTime}
                 difficulties = {post.difficulties}
-             />
+             />}
             )
           }
         </div>

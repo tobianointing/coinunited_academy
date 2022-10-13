@@ -12,7 +12,7 @@ import shallow from "zustand/shallow"
 import { useEffect } from "react"
 import {Link as Scroll , Element as Target} from 'react-scroll'
 import Link from "next/link"
-
+import Head from "next/head"
 
 const GlossaryItem:Glossary = ({title, description, uri}) => {
     return (
@@ -50,12 +50,15 @@ const GlossaryContainer = ({gKey, posts}:{gKey:string, posts?:Array<GlossaryItem
 }
 
 type GProps =  {
-    glossaries_key:Array<GlossaryKey>
+    glossaries_key:Array<GlossaryKey>,
+    page:{
+        url:string
+    }
 } 
 
 const Glossary = (props:GProps) => {
     const g_key = props?.glossaries_key
-
+    const page = props?.page
     const [glossaryKey, setGlossaryKey] = useGlossaryKey( state => [state.glossaryKey, state.setGlossaryKey], shallow)
     useEffect(() => {
         setGlossaryKey(g_key)
@@ -64,6 +67,29 @@ const Glossary = (props:GProps) => {
 
     return (
     <div className="min-h-screen">
+        <Head>
+            <title>Glossary</title>
+            <meta name="description" content="An alphabetical list of difficult, technical, or foreign words." />
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+            <link rel="manifest" href="/site.webmanifest" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta property="og:title" content="Glossary" />
+            <meta property="og:description" content="An alphabetical list of difficult, technical, or foreign words." />
+            <meta property="og:locale" content="en_US" />
+            <meta property="og:site_name" content="CoinUnited.io" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={page?.url} />
+            <meta property="og:image" content="/img/cu_academy_logo.png" />
+            <meta property="og:image:secure_url" content="/img/cu_academy_logo.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@realcoinunited" />
+            <meta name="twitter:title" content="Academy | CoinUnited.io" />
+            <meta name="twitter:description" content="An alphabetical list of difficult, technical, or foreign words." />
+            <meta name="twitter:creator" content="@realcoinunited" />
+            <meta name="twitter:image" content="/img/cu_academy_logo.png" />
+        </Head>
         <div className='bg-white'>
             <Container>
                 <TopMainDesktop />
@@ -138,10 +164,12 @@ export const getStaticProps: GetStaticProps = async () => {
 
 
     const glossaries_key = data?.keyAlphabets?.edges
-
+    const page = data?.generalSettings
+    
     return {
         props:{
-            glossaries_key
+            glossaries_key: glossaries_key  ? glossaries_key : [],
+            page: page ? page : {url: 'https://coinunited.io/academy/glossary'}
         },
         revalidate: 300 
     }

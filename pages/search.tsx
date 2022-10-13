@@ -10,6 +10,7 @@ import { GetServerSideProps } from "next"
 import {GET_POSTS_BY_QUERY, GET_POSTS_BY_QUERY_2} from "../lib/queries"
 import { client } from "../lib/apollo"
 import { Filters } from "../components/Filters"
+import Head from "next/head"
 
 
 
@@ -107,6 +108,13 @@ const Search= ({posts:serverArticles, resultTotal:total, query, difficulties, ta
 
     return (
         <div>
+            <Head>
+                <title>Search</title>
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                <link rel="manifest" href="/site.webmanifest" />
+            </Head>
             <div className='bg-white'>
                 <Container>
                     <TopMainDesktop />

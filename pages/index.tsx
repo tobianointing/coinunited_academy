@@ -38,8 +38,6 @@ const Home = (props:IData) => {
     setTags(tags);
   }, [posts, categories, featuredPost,difficulties,tags])
 
-
-
   useEffect(() => {
     (async ()=>{
 
@@ -72,18 +70,18 @@ const Home = (props:IData) => {
     <main className='mt-2'>
       <Head>
 
-        <title>{page?.title}</title>
-        <link rel="icon" href="/img/favicon.ico" />
+        <title>Academy | CoinUnited.io</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         <meta name="description" content={page?.description} />
         <meta property="og:title" content={page?.title} />
         <meta property="og:description" content={page?.description} />
-        <script type="application/ld+json"  dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON.parse(seo?.contentTypes?.page?.schema?.raw)) }} />
         <meta property="og:locale" content="en_US" />
         <meta property="og:site_name" content="CoinUnited.io" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Academy | CoinUnited.io" />
-        <meta property="og:description" content={page?.description} />
-        <meta property="og:url" content={page?.uri + '/en/'} />
+        <meta property="og:url" content={page?.url} />
         <meta property="og:image" content="/img/cu_academy_logo.png" />
         <meta property="og:image:secure_url" content="/img/cu_academy_logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -92,6 +90,7 @@ const Home = (props:IData) => {
         <meta name="twitter:description" content={page?.description} />
         <meta name="twitter:creator" content="@realcoinunited" />
         <meta name="twitter:image" content="/img/cu_academy_logo.png" />
+        <script type="application/ld+json"  dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON.parse(seo?.contentTypes?.page?.schema?.raw)) }} />
       </Head>
       <div>
         <div className='bg-white'>

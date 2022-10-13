@@ -8,66 +8,63 @@ const Footer = () => {
         
         <div className="flex items-center font-bold border-b border-gray-500 py-7 justify-between">
             <h3 className="text-2xl md:text-4xl">{t("Start Trading Now")}</h3>
-            <button className="bg-amber-600 px-2 md:px-5 p-1 rounded-md">{t("Get Started")}</button>
+            <a href="https://wallet.coinunited.io/register" className="bg-amber-600 px-2 md:px-6 p-3 rounded-md">{t("Get Started")}</a>
         </div>
         
         <div className="my-8 mb-24 grid grid-cols-1 space-y-10 md:space-y-0 md:grid-cols-6 md:gap-[7rem]">
             <div className="md:col-span-4">
                 <ul className="flex md:space-x-6 flex-col md:flex-row space-y-5 md:space-y-0">
                     <li className="md:text-amber-600 whitespace-nowrap">
-                        About Us
-                        <ul className="hidden md:block text-white my-5">
-                            <li>About CoinUnited.io</li>
-                            <li>Contact Us</li>
-                            <li>Community</li>
-                            <li>Press</li>
-                            <li>Careers</li>
-                            <li>Security</li>
-                            <li>Education</li>
-                            <li>Venture Capital</li>              
+                        <span className="font-bold">About Us</span>
+                        <ul className="hidden md:block text-white my-5 md:space-y-3">
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/about-us">About CoinUnited.io</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/contact-us">Contact Us</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/community">Community</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/press">Press</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/careers">Careers</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/security">Security</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/education">Education</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/venture-capital">Venture Capital</a></li>              
                         </ul>
                     </li>
                     <li className="md:text-amber-600 whitespace-nowrap">
-                        Product
-                        <ul className="text-white hidden md:block my-5 space-y-2">
-                            <li>Wallet</li>
-                            <li>Stake and Earn</li>
-                            <li>OTC Trading</li>
-                            <li>ATM Network</li>
-                            <li>NFT Gallery</li>
-                            <li>Gifting Crypto</li>
+                    <span className="font-bold">Product</span>
+                        <ul className="text-white hidden md:block my-5 md:space-y-3">
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/redirect">Wallet</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/staking">Stake and Earn</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/otc">OTC Trading</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/atm">ATM Network</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/nft">NFT Gallery</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/gifting-crypto">Gifting Crypto</a></li>
                         </ul>
                     </li>
                     <li className="md:text-amber-600 whitespace-nowrap">
-                        Support
-                        <ul className="text-white my-5 hidden md:block space-y-2">
-                            <li>User Feedback</li>
-                            <li>FAQ</li>
-                            <li>Submit a Request</li>
-                            <li>Invite Friends</li>
-                            <li>Affiliate Program</li>
-                            <li>Download</li>
+                    <span className="font-bold">Support</span>
+                        <ul className="text-white my-5 hidden md:block md:space-y-3">
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/user-feedback">User Feedback</a></li>
+                            <li><a className="hover:text-amber-600" href="https://help.coinunited.io/">FAQ</a></li>
+                            <li><a className="hover:text-amber-600" href="https://help.coinunited.io/hc/en-us/requests/new?ticket_form_id=7281034166809">Submit a Request</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/referral-friends">Invite Friends</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/affiliate-program">Affiliate Program</a></li>
+                            <li><a className="hover:text-amber-600" href="https://coinunited.io/en/download">Download</a></li>
                         </ul>
                     </li>
                     <li className="md:text-amber-600 whitespace-nowrap">
-                        Learn
-                        <ul className="text-white my-5 hidden md:block space-y-2">
-                            <li>Browse Crypto Prices</li>
-                            <li>Buy Bitcoin</li>
-                            <li>Buy Ethereum</li>
-                            <li>Buy Solana</li>
-                            <li>Buy BNB</li>
-                            <li>Buy USDT / USDC</li>
-                            <li>Buy Dogecoin</li>
-                            <li>Buy SHIB Inu</li>
-                            <li>Buy AVAX</li>
-                            <li>Buy DOT</li>
-                            <li>Buy MATIC</li>
+                    <span className="font-bold">Learn</span>
+                        <ul className="text-white my-5 hidden md:block md:space-y-3">
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-bitcoin-in-hong-kong">Browse Crypto Prices</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-bitcoin-in-hong-kong">Buy Bitcoin</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-etherum-in-hong-kong">Buy Ethereum</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-solana-in-hong-kong">Buy Solana</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-bnb-in-hong-kong">Buy BNB</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-tether-in-hong-kong">Buy USDT / USDC</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-dogecoin-in-hong-kong">Buy Dogecoin</a></li>
+                            <li><a className="hover:text-amber-600" href="https://www.coinunited.io/en/buy-coin/buy-shib-in-hong-kong">Buy SHIB Inu </a></li>
                         </ul>
                     </li>
                     <li className="md:text-amber-600">
-                        Contact Us
-                        <ul className="text-white my-5 space-y-2 hidden md:block">
+                    <span className="font-bold">Contact Us</span>
+                        <ul className="text-white my-5 md:space-y-3 hidden md:block">
                             <li>Email: cs@coinunited.io </li>
                             <li>Courseway Bay Flagship Store: 2/F & 3/F , V Point 18 Tang Lung street Courseway Bay, Hong Kong</li>
                             <li>Tshim Sha Tsui Branch: 1/F, 2 House Floor Street, Tshim Sha Tsui, Kowloon</li>

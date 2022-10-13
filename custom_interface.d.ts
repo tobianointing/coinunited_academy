@@ -99,7 +99,7 @@ export interface IData {
     page : {
       title: string,
       description: string,
-      uri: string
+      url: string
     }
   }
   

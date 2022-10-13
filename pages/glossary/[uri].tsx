@@ -7,6 +7,8 @@ import { IDifficulty } from "../../custom_interface"
 import { client } from "../../lib/apollo"
 import { GET_GLOSSARY, GET_SUGGESTIONS } from "../../lib/gql_query/glossary"
 import { truncateWord } from "../[slug]"
+import Head from "next/head"
+import parse from 'html-react-parser';
 
 type KeyAlpha =  {
     uri: string
@@ -21,6 +23,9 @@ type GlossaryArticle = {
       },
     difficulties: {
         nodes: Array<IDifficulty>
+    },
+    seo : {
+        fullHead: string
     }
 }
 
@@ -31,9 +36,20 @@ type Suggestion = {
     __typename: 'Glossary'
 }
 
-const Definition = ({article, suggestions}:{article:GlossaryArticle, suggestions:Array<Suggestion>}) => {
+const Definition = ({article, suggestions, fullHead}:{article:GlossaryArticle, suggestions:Array<Suggestion>, fullHead:string}) => {
+      
     return (
         <main>
+            <Head> 
+                <title>{article?.title}</title>
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+                <link rel="manifest" href="/site.webmanifest" />
+                {(fullHead) ? parse(fullHead): ""}
+
+            </Head>
+
         <Container_2>
             <div className="flex items-center space-x-1 text-md my-6 font-bold text-gray-500">
                     <Link href='/'><a className="hover:underline hover:text-amber-600">Home</a></Link>
@@ -117,7 +133,7 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     
     const article:GlossaryArticle = res?.data?.glossary
     const key_alphabet_uri = article?.keyAlphabets?.nodes[0]?.uri
-    
+    const fullHead =  article?.seo?.fullHead
     const get_suggestions = await client.query({
         query: GET_SUGGESTIONS,
         variables: {
@@ -130,7 +146,8 @@ export const getStaticProps:GetStaticProps = async ({params}) => {
     return {
         props: {   
             article: article || {},
-            suggestions: suggestions || []
+            suggestions: suggestions || [],
+            fullHead: fullHead || ''
         }
     }
 

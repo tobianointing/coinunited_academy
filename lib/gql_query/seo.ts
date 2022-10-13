@@ -14,7 +14,7 @@ export const GET_SEO_DATA = gql`
         generalSettings {
             title
             description
-        url
+            url
     }
     }
 `

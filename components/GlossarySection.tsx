@@ -8,8 +8,6 @@ import {useGlossary} from "../lib/hooks";
 const GlossarySection = () => {
     const glossaries = useGlossary(state => state.glossaries);
 
-    
-   console.log(`redered, glossary > ${glossaries}`)
     return (
         <div className="my-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7">

@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { FilterComponenet,IFilters } from "../custom_interface"
 import { client } from "../lib/apollo"
-import { FILTER_POSTS_BY_TAG_AND_DIFF, GET_POSTS_BY_QUERY } from "../lib/queries"
+import { FILTER_POSTS_BY_TAG_AND_DIFF} from "../lib/queries"
 import { Difficulty } from "./MoreArticles"
 import { Tags } from "./MoreArticles"
 
@@ -52,7 +52,6 @@ export const Filters:FilterComponenet = ({tags, difficulties, dataSetter, query}
     
     useEffect(()=>{
 
-        console.log(filters, query, locale)
         if (filters.difficulties.length > 0 || filters.tags.length > 0){
             if (query) {
                 client.query({
@@ -66,7 +65,7 @@ export const Filters:FilterComponenet = ({tags, difficulties, dataSetter, query}
                 }).then(result=>{
                     const posts = result.data?.posts?.nodes
                     const resultTotal = result.data?.posts?.pageInfo?.offsetPagination?.total
-                    console.log(result)
+                
                     if(dataSetter){
                         dataSetter(filters, {posts, resultTotal})
                     }
