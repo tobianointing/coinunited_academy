@@ -10,6 +10,8 @@ module.exports = {
       colors:{
          footer: '#15192a',
          glossary: '#F8F8F8',
+         'site-amber': '#ED8B18',
+         'site-orange': '#FCE8D0',
       },
       fontFamily:{
         Dm: ['DM Serif Display', 'serif'],

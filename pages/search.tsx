@@ -2,7 +2,7 @@ import Container from "../components/Container"
 import TopMainDesktop from "../components/TopMain"
 import OptimizedImage from "../components/OptimizedImage"
 import { Article, formatDate, formatReadingTime, Difficulty as InlineDifficulty } from "../components/LatestArticles"
-import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/solid"
+import { CalendarDaysIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { IDifficulty, IFilters, Post, Tag } from "../custom_interface"
 import { useState } from "react"
@@ -11,6 +11,7 @@ import {GET_POSTS_BY_QUERY, GET_POSTS_BY_QUERY_2} from "../lib/queries"
 import { client } from "../lib/apollo"
 import { Filters } from "../components/Filters"
 import Head from "next/head"
+import Image from "next/image"
 
 
 
@@ -42,7 +43,7 @@ const ListArticle = ({title, featuredImage, difficulties, date, readingTime, uri
                             <span>{formatDate(date)}</span>
                         </span>
                         <span className="flex items-center space-x-1">
-                            <ClockIcon className="w-3 h-3" />
+                            <Image src='/img/clock.svg' objectFit="cover" width={16} height={16} />   
                             <span>{formatReadingTime(readingTime)}</span>
                         </span>
                     </span>
@@ -194,19 +195,19 @@ const Search= ({posts:serverArticles, resultTotal:total, query, difficulties, ta
                         }
                     </div>
 
-                    <div className="flex items-center my-7 justify-center">
-                        <div className="flex space-x-3 items-center text-gray-400 justify-between font-bold">
+                    <div className="flex items-center justify-center my-7">
+                        <div className="flex items-center justify-between space-x-3 font-bold text-gray-400">
                             {currentPage > 1 && 
-                                <button onClick={() => fetchPaginatedDataDefault(currentPage-1)} className="border-2 px-5 p-3 rounded-sm">{'<'}</button>}
+                                <button onClick={() => fetchPaginatedDataDefault(currentPage-1)} className="p-3 px-5 border-2 rounded-sm">{'<'}</button>}
                             {pagination().map(page =>
                               <button key={page} 
                                     onClick={() => fetchPaginatedDataDefault(page)}
-                                    className={currentPage===page? "border-amber-500 text-amber-500 border-2 px-5 p-3 rounded-sm" :"border-2 px-5 p-3 rounded-sm"}>{page}</button>
+                                    className={currentPage===page? "border-site-amber text-site-amber border-2 px-5 p-3 rounded-sm" :"border-2 px-5 p-3 rounded-sm"}>{page}</button>
                               )
                             }
                             { currentPage < pagination().length && <button 
                                 onClick={() => fetchPaginatedDataDefault(currentPage+1)}
-                                className="border-2  px-5 p-3 rounded-sm">{'>'}</button>
+                                className="p-3 px-5 border-2 rounded-sm">{'>'}</button>
                             }
                         </div>
                     </div>

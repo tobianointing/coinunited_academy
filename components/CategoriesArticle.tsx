@@ -1,10 +1,11 @@
-import { ChevronRightIcon, CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/solid"
+import { CalendarDaysIcon} from "@heroicons/react/24/solid"
 import {  Post } from "../custom_interface"
 import {useCategories} from "../lib/hooks"
 import {titleCase} from "./TopMain"
 import OptimizedImage from "./OptimizedImage"
 import {formatDate, formatReadingTime, Difficulty} from "./LatestArticles"
 import Link from "next/link";
+import Image from "next/image"
 
 interface CatPost extends Post {
     image: string
@@ -33,7 +34,7 @@ const CatArticle = ({title, image, difficulties, date, readingTime, uri }:CatPos
                             <span>{formatDate(date)}</span>
                         </span>
                         <span className="flex space-x-1 items-center">
-                            <ClockIcon className="h-3 w-3" />
+                            <Image src='/img/clock.svg' objectFit="cover" width={12} height={12} />
                             <span>{formatReadingTime(readingTime)}</span>
                         </span>
                     </span>
@@ -49,19 +50,20 @@ const CatArticle = ({title, image, difficulties, date, readingTime, uri }:CatPos
 const CategoryBlock = ({name, posts}:{name:string, posts?:Array<Post>}) => {
     
     return (
+    
     <>
         <div className="flex items-center justify-between">
             <h3 className="font-semibold text-xl">{name}</h3>
-            <button className="rounded-md flex items-center space-x-1 justify-center p-1 px-2 text-gray-400 bg-white shadow-md">
-              <span className="text-sm ms:text-md">SEE ALL {name.toUpperCase()} ARTICLES</span> 
-              <span className="text-black font-bold flex items-center">
-                <ChevronRightIcon className="h-4 w-4"/>
-                <ChevronRightIcon className="h-4 w-4"/>
-              </span>
+            
+            <button className="p-2 px-3 space-x-2 text-[0.75rem] text-[#BBBCBD] hover:bg-[#F2F2F2] bg-[#F5F5F5] rounded-md">
+                    <span>SEE ALL {name.toUpperCase()} ARTICLES</span> 
+                    <span className="font-semibold text-[#353640]">
+                        {'>'}{'>'}
+                    </span>
             </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 my-7 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-7 gap-6">
             {
                 posts?.map((post, index) => 
                 <CatArticle  
@@ -81,8 +83,6 @@ const CategoryBlock = ({name, posts}:{name:string, posts?:Array<Post>}) => {
 
 }
 
-
-
 const CategoriesArticle = () => {
     const categories = useCategories(state => state.categories)
     return (
@@ -90,7 +90,12 @@ const CategoriesArticle = () => {
         
         {categories?.map((category, index) => (
             category.posts.nodes.length > 0 && category.name.toLowerCase() !== "uncategorized" &&
+            <div>
                 <CategoryBlock key={index} name={titleCase(category.name)} posts={category?.posts?.nodes}/>
+                {index !== categories.length - 1 &&
+                    <hr className="my-[2.5rem] h-[0.125rem] bg-black opacity-5" />
+                }
+            </div>
          ))
         }
     </div>

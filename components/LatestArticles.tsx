@@ -1,4 +1,4 @@
-import { CalendarDaysIcon, ClockIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
+import { CalendarDaysIcon } from "@heroicons/react/24/solid"
 import { Post } from "../custom_interface"
 import { usePosts} from "../lib/hooks"
 import OptimizedImage from "./OptimizedImage"
@@ -6,7 +6,7 @@ import { titleCase } from "./TopMain"
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation'
-
+import Image from "next/image"
 
 export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
   let src:string, bg:string;
@@ -19,7 +19,7 @@ export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
         break;
     case 'Intermediate':
         src = '/img/yellowdot.svg'
-        bg = 'bg-orange-200'
+        bg = 'bg-[#F0B90B33]'
         break;
     case 'Advanced':
         src = '/img/reddot.svg'
@@ -30,13 +30,12 @@ export const Difficulty =( {difficulty}:{difficulty?:string}) =>{
         bg = 'bg-green-200'  
   }
 
-  const className:string = `flex text-gray-700 ${bg} rounded-md  space-x-3 p-1 px-3 items-center text-sm`
-  
-  
+  const className:string = `flex text-gray-700 ${bg} rounded-md  space-x-1 p-1 px-3 items-center text-sm`
+
 
   return (
     <span className={className}>
-      <OptimizedImage src={src} alt="difficulty dot" className="w-[0.35rem] h-[0.35rem]" />
+      <Image src={src} alt="difficulty dot" width={6} height={6} objectFit='contain'/>
       <span>{titleCase(difficulty ? difficulty : 'Beginner' )}</span>
     </span>
   )
@@ -48,8 +47,10 @@ export const formatDate = (date?: string) => {
   if (!date) return ''
   const options:Intl.DateTimeFormatOptions = {day: 'numeric', month: 'short',  year: 'numeric' };
   const d = new Date(date);
-  return d.toLocaleDateString('en-US', options);
-
+  const month = d.toLocaleString('en-US', { month: 'short' });
+  const day = d.getDate();
+  const year = d.getFullYear();
+  return `${day} ${month} ${year}`
 }
 
 export const formatReadingTime = (minutes?: string) => {
@@ -64,7 +65,7 @@ export const formatReadingTime = (minutes?: string) => {
 
 export const Article = ({title, uri, featuredImage, categories, date, readingTime, difficulties}:Post) =>{ 
 
-  return <Link href={uri? uri : '/'}><a  className="relative flex flex-col overflow-hidden bg-white shadow-lg rounded-2xl hover:shadow-2xl">
+  return <Link href={uri? uri : '/'}><a  className="relative flex flex-col overflow-hidden bg-white shadow-lg rounded-2xl hover:drop-shadow-xl">
     <div className="relative">
       <OptimizedImage src={featuredImage?.node?.sourceUrl} alt="featured image" className="w-full h-56"/>
       <span className="absolute p-1 px-2 text-sm text-white bg-black rounded-md right-2 top-3">
@@ -84,7 +85,7 @@ export const Article = ({title, uri, featuredImage, categories, date, readingTim
                   </span>
 
                   <span className="flex items-center space-x-1">
-                      <ClockIcon className="w-3 h-3" />
+                      <Image src='/img/clock.svg' objectFit="cover" width={12} height={12} />         
                       <span>{formatReadingTime(readingTime)}</span>
                   </span>
               </span>
@@ -106,11 +107,10 @@ const LatestArticles = ({props_post}:{props_post?:Post[]}) => {
     <div className="mt-5">
         <div className="flex items-center justify-between">
             <p className="text-xl font-bold opacity-90">{t("Latest Articles")}</p>
-            <button className="flex items-center justify-center p-1 px-2 space-x-1 text-gray-400 bg-white rounded-md shadow-md">
+            <button className="p-2 px-3 space-x-2 text-[0.75rem] text-gray-400 hover:bg-[#F2F2F2] bg-white rounded-md">
               <span>{t("SEE ALL ARTICLES")}</span> 
-              <span className="flex items-center font-bold text-black">
-                <ChevronRightIcon className="w-4 h-4"/>
-                <ChevronRightIcon className="w-4 h-4"/>
+              <span className="font-semibold">
+                {'>'}{'>'}
               </span>
             </button>
         </div>

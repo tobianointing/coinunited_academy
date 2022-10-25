@@ -136,28 +136,28 @@ const Home = (props:IData) => {
 
         <div className="bg-white">
           <Container>
-                <div className="flex flex-col md:flex-row my-8 items-center md:space-x-20 md:justify-between">
+                <div className="flex flex-col items-center my-8 md:flex-row md:space-x-20 md:justify-between">
 
-                    <div className='md:w-1/4 p-8 md:p-1 w-full'>
-                        <ContainImage src="/img/announcement.svg" className='w-3/5 mx-auto md:w-full h-64' alt="announcement" />
+                    <div className='w-full p-8 md:w-1/4 md:p-1'>
+                        <ContainImage src="/img/announcement.svg" className='w-3/5 h-64 mx-auto md:w-full' alt="announcement" />
                     </div>
 
-                    <div className='md:w-3/4 w-full'>
+                    <div className='w-full md:w-3/4'>
                         <div className="text-center md:text-left">
                         <h3 className='font-bold text-3xl md:text-5xl w-full md:tracking-[.06em]'>{t("make-every-minute-count")}</h3>
                         
-                        <p className='my-4 mt-6 font-bold text-lg'>{t("Summer Limited Offer")}! <br /> {t("free-subscription")}</p>
+                        <p className='my-4 mt-6 text-lg font-bold'>{t("Summer Limited Offer")}! <br /> {t("free-subscription")}</p>
                         
-                        <div className='flex items-center space-x-5 justify-center md:justify-start my-9'>
-                            <input type="text" placeholder={t('Enter your email address')} className='border placeholder:font-semibold border-gray-300 rounded-sm p-1 bg-gray-100 px-2 w-80' />
-                            <button className='bg-gray-100 px-4 p-1 border border-gray-300 font-semibold rounded-sm'>Subscribe</button>
+                        <div className='flex items-center justify-center space-x-5 md:justify-start my-9'>
+                            <input type="text" placeholder={t('Enter your email address')} className='p-1 px-2 bg-gray-100 border border-gray-300 rounded-sm placeholder:font-semibold w-80' />
+                            <button className='p-1 px-4 font-semibold bg-gray-100 border border-gray-300 rounded-sm'>Subscribe</button>
                         </div>                      
 
 
                         </div>
-                        <div className="flex font-bold items-center justify-center md:justify-start space-x-3">
+                        <div className="flex items-center justify-center space-x-3 font-bold md:justify-start">
                             <input type="checkbox" name="subscribe" /> <br />
-                            <span>{t("i-agree")} <span className='text-amber-600'>{t("Terms of Service")}</span></span>
+                            <span>{t("i-agree")} <span className='text-site-amber'>{t("Terms of Service")}</span></span>
                         </div>
 
                     </div>
