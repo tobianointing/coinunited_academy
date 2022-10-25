@@ -14,9 +14,10 @@ import parse from 'html-react-parser';
 import Image from "next/image";
 
 
-export const truncateWord = (str: string, num: number) => {
-    if (!str) return ''    
-    if (str.length <= num) {
+export const truncateWord = (str?: string, num?: number) => {
+    if (!str) return ''
+      
+    if (num && str.length <= num) {
         return str;
     }
     return str.slice(0, num).trim() + "...";
@@ -33,6 +34,7 @@ const ArticleDetail = (props:{article:Post, posts:Post[], fullHead:string}) => {
             <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
             <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
             <link rel="manifest" href="/site.webmanifest" />
+            <meta name="description" content={truncateWord(article.content, 150)} />
             {(fullHead) ? parse(fullHead): ""}
           </Head>
 
@@ -67,7 +69,7 @@ const ArticleDetail = (props:{article:Post, posts:Post[], fullHead:string}) => {
                             </span>
 
                             <span className="flex items-center space-x-1">
-                                <Image src='/img/clock.svg' objectFit="cover" width={20} height={20} />
+                                <Image src='/img/clock.svg' objectFit="cover" alt="clock" width={20} height={20} />
                                 <span>{formatReadingTime(article?.readingTime)}</span>
                             </span>
                         </span>
