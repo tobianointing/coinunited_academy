@@ -20,7 +20,7 @@ const OptimizedImage = ({src, alt, className}:OptimizedImageProps) => {
 export const ContainImage = ({src, alt, className}:OptimizedImageProps) => {
     return (
         <div className={`relative ${className}`}>
-            <Image src={src} alt={alt} layout="fill" objectFit="contain" loading="lazy"/>
+            <Image src={src} alt={alt} layout="fill" objectFit="contain" />
         </div>
     )
   }

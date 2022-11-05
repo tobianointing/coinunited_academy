@@ -96,7 +96,7 @@ const MoreArticles = () => {
             <div>
                 <p className="font-semibold">{t("Difficulty")}</p>
 
-                <div className="flex items-center space-x-4 flex-wrap content-start my-4 mb-7">
+                <div className="flex items-center gap-4 flex-wrap content-start my-4 mb-7">
                     {difficulties.length > 0 && difficulties.map((difficulty) => (
                             <Difficulty key={difficulty.id} difficulty={difficulty.name}/>
                         ))
@@ -107,7 +107,7 @@ const MoreArticles = () => {
         </div>
 
 
-        <div className="grid grid-cols-1 my-6 space-y-6 md:grid-cols-3 md:space-y-0 md:gap-8">
+        <div className="grid grid-cols-1 my-6 space-y-6 md:grid-cols-2 lg:grid-cols-3 md:space-y-0 md:gap-8">
             {rest_after_six?.length > 0 && rest_after_six.map((post) => 
                 <Article 
                     key={post?.id}

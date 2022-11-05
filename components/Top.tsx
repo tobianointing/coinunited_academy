@@ -35,7 +35,7 @@ const Top = () => {
     <div className="grid grid-cols-1 my-6 space-y-6 md:grid-cols-2 md:space-y-0 md:gap-14">
         <div className="md:mt-24">
             <p className="opacity-80 text-[1.125rem]">{t("DISCOVER EVERYTHING ABOUT")}</p>
-            <h1 className="my-8 text-[3.75rem] break-normal md:text-5xl font-Dm">
+            <h1 className="my-8 text-[3.75rem] break-normal leading-[3.5rem] md:text-5xl font-Dm">
                 {t('Blockchain & Crypto')}
             </h1>
             <p className="mt-10 text-sm text-gray-700 opacity-90">
@@ -44,7 +44,7 @@ const Top = () => {
         </div>
 
         {featuredPost?.uri && <Link href={featuredPost?.uri ? featuredPost?.uri : '/' }><a>
-            <p className="mb-4 text-[1.625rem] font-bold">FEATURED</p>
+            <p className="mb-4 text-base md:text-[1.625rem] font-bold">FEATURED</p>
             <div className="overflow-hidden shadow-xl rounded-xl">
                 <OptimizedImage src={featuredPost?.featuredImage?.node?.sourceUrl} alt="featured image" className="w-full h-60"/>
                 <div className="p-6 px-6">

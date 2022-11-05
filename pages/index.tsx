@@ -128,7 +128,7 @@ const Home = (props:IData) => {
           </Container>
         </div>
         
-        <div className="bg-gray-100">
+        <div className="bg-[#F8F8F8]">
           <Container>
               <GlossarySection />
           </Container>
@@ -144,19 +144,19 @@ const Home = (props:IData) => {
 
                     <div className='w-full md:w-3/4'>
                         <div className="text-center md:text-left">
-                        <h3 className='font-bold text-3xl md:text-5xl w-full md:tracking-[.06em]'>{t("make-every-minute-count")}</h3>
+                        <h3 className='font-bold text-[1.75rem] md:text-[2rem] lg:text-[4rem] w-full md:tracking-[.06em] md:leading-[3.25rem]'>{t("make-every-minute-count")}</h3>
                         
-                        <p className='my-4 mt-6 text-lg font-bold'>{t("Summer Limited Offer")}! <br /> {t("free-subscription")}</p>
+                        <p className='my-4 mt-6 text-[1.25rem] md:text-lg font-bold'>{t("Summer Limited Offer")}! <br /> {t("free-subscription")}</p>
                         
-                        <div className='flex items-center justify-center space-x-5 md:justify-start my-9'>
-                            <input type="text" placeholder={t('Enter your email address')} className='p-1 px-2 bg-gray-100 border border-gray-300 rounded-sm placeholder:font-semibold w-80' />
-                            <button className='p-1 px-4 font-semibold bg-gray-100 border border-gray-300 rounded-sm'>Subscribe</button>
+                        <div className='flex items-center justify-center space-x-5 md:justify-start mt-9 mb-3 lg:my-9'>
+                            <input type="text" placeholder={t('Enter your email address')} className='box-border text-base py-2 px-4 bg-[#62636B0D] border border-[#76808F80] rounded-sm md:placeholder:font-semibold w-4/5 md:w-80 focus:ring-0 focus:border-[#ED8B18]' />
+                            <button className='box-border py-2 px-[1.25rem] font-semibold bg-[#62636B0D] border border-[#76808F80] rounded-sm hover:bg-[#62636B1A] focus:border-[#000000] hover:border-[#76808F80]'>Subscribe</button>
                         </div>                      
 
 
                         </div>
                         <div className="flex items-center justify-center space-x-3 font-bold md:justify-start">
-                            <input type="checkbox" name="subscribe" /> <br />
+                            <input type="checkbox" name="subscribe" className='checked:bg-[#ED8B18] ring-0 h-[20px] w-[20px]' /> <br />
                             <span>{t("i-agree")} <span className='text-site-amber'>{t("Terms of Service")}</span></span>
                         </div>
 

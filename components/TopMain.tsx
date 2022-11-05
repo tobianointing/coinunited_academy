@@ -17,7 +17,7 @@ const TopMainDesktop = () => {
     const { t } = useTranslation('common')
     const categories  = useCategories(state => state.categories);
   return (
-    <div className="hidden md:block">
+    <div className="hidden lg:block">
         <div className="flex items-center justify-center">
             <Image src="/img/academy-logo.png" alt="coinunited logo" objectFit="contain" className="border border-red-300" width={256} height={80} />
         </div>
