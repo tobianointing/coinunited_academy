@@ -110,7 +110,7 @@ const LatestArticles = ({ props_post }: { props_post?: Post[] }) => {
   let first_six_posts
   const posts: Post[] = usePosts((state) => state.posts)
   const router = useRouter()
-  props_post ? (first_six_posts = props_post) : (first_six_posts = posts?.slice(0, 6))
+  props_post? first_six_posts = props_post : first_six_posts = posts?.slice(0, 6);
   const { t } = useTranslation("common")
 
   return (
